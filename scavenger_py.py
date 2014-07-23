@@ -11,8 +11,8 @@ class actor:
 
     def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drop, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
     self.name = name
-	  self.gender = gender
-	  self.species = species
+    self.gender = gender
+    self.species = species
     self.x = x
     self.color = color
     self.y = y
@@ -63,19 +63,19 @@ class actor:
             self.x += dx
             self.y += dy
             if dx < 0:
-                self.face = 'Left'
+                self.face = 'left'
                 if self == 'player':
                     self.char = '◀'
             if dx > 0:
-                self.face = 'Right'
+                self.face = 'right'
                 if self == 'player':
                     self.char = '▶'
             if dy < 0:
-                self.face = 'Up'
+                self.face = 'up'
                 if self == 'player':
                     self.char = '▲'
             if dx > 0:
-                self.face = 'Down'
+                self.face = 'down'
                 if self == 'player':
                     self.char = '▼'
     def draw (self):
@@ -85,17 +85,95 @@ class actor:
     def clear (self):
         #Clears character
         libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
+        
+#Combat Functions
+def damage(target, origin, hand):
+    if origin.hand.skill == 'None' and origin.hand.sort == 'Melee':
+    	origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
+	target_resist = (target.STR * target.suit.power + target.suit.protection)
+	damage_dealt = origin_damage - target_resist
+	if damage_dealt < 1 :
+		target.HPcurr -= 1
+	elif damage_dealt >= 1 :
+		target.HPcurr = target.HPcurr - damage_dealt
+		
+
+#Melee Weapon Functions
+def melee_atk(origin, hand, facing):
+    If origin.fire != True :
+        origin.hand.effect(origin, origin.facing, hand)
+        origin.fire = True
+
+def fist_attack(origin, facing, weapon):
+    if facing == 'up'
+	put_char(con, origin.x, origin.y - 1, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x and object.y == origin.y - 1:
+			damage(object, origin, weapon)
+			put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
+    if facing == 'down'
+	put_char(con, origin.x, origin.y + 1, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x and object.y == origin.y + 1:
+			damage(object, origin, weapon)
+			put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
+    if facing == 'left'
+	put_char(con, origin.x - 1, origin.y, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x - 1 and object.y == origin.y - 1:
+			damage(object, origin, weapon)
+			put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
+    if facing == 'right'
+	put_char(con, origin.x + 1, origin.y, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x + 1 and object.y == origin.y:
+			damage(object, origin, weapon)
+			put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
+        
+def do_nothing():
+	print 'Unfortunately, this does nothing.'
+
 #item code
-def item:
-    __init__(self, power, dist, sort, hands, effect)
+def weapon:
+    __init__(self, power, dist, skill, sort, hands, effect)
     self.power = power
     self.dist = dist
+    self.skill = skill
     self.sort = sort
     self.hands = hands
     self.effect = effect
 
+def suit:
+    __init__(self, power, protection)
+    self.power = power
+    self.protection = protection
+    
+def visor:
+    __init__(self, effect)
+    self.effect = effect
+
+def shield:
+    __init__(self, powermax, powercurr = powermax, regentime)
+    self.powermax = powermax
+    self.regentime = regentime
+
+#Melee weapons
+weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
+weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_atk())
+
+#Ranged Weapons
+
+#Suits
+suit_skillsuit = suit(1.1, 10)
+
+#Visors
+visor_basic = visor(do_nothing())
+
+#Shields
+shield_basic = shield(50, 15)
+
 #construct player
-player = actor('name', 'gender', 'species', 'job', 0, 0, 'Down', libtcod.white, '▼', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, items.suits.skillsuit, items.weapons.flexiblade, items.visors.basic, null):
+player = actor('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, '▼', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic):
 
 print 'Welcome to Frontier: Scavenger!'
 player.name = raw_input('What is your name?')
@@ -124,11 +202,6 @@ def make_map():
     #adjust individual tiles
     map[30][22].blockpass= True
     map[30][22].blocksight = True
-    
-def melee_atk(origin, hand, facing):
-    If origin.fire != True :
-        origin.hand.effect(origin.facing)
-        origin.fire = True
 
 def handle_keys ():
     global player.x, player.y
@@ -184,7 +257,9 @@ def render_all():
 libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 
 # Incoming main loop 
-actors = [player]
+pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic):
+
+actors = [player, pbag]
 
 while not libtcod.is_window_closed():
 render_all()
