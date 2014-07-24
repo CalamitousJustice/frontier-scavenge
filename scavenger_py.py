@@ -98,7 +98,7 @@ def damage(target, origin, hand):
 		target.HPcurr = target.HPcurr - damage_dealt
 		if target.HPcurr <= 0 :
 			#target.drop()
-		
+	
 
 #Melee Weapon Functions
 def melee_atk(origin, hand, facing):
