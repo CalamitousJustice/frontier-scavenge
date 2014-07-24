@@ -96,6 +96,8 @@ def damage(target, origin, hand):
 		target.HPcurr -= 1
 	elif damage_dealt >= 1 :
 		target.HPcurr = target.HPcurr - damage_dealt
+		if target.HPcurr <= 0 :
+			#target.drop()
 		
 
 #Melee Weapon Functions
