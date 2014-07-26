@@ -403,6 +403,8 @@ def sword_attack(origin, facing, weapon):
 #Impact Mace Attack
 
 #Pulse Attack(single shot)
+#Script generates list of targets in ~170 degree arc, singles out the closest target within range, then the bottom loop guides the shot towards the closest target, breaking on collision with any Actor or impassable terrain.
+                                     
 def pulse_attack(origin, facing, weapon):
     def targets = []    
     if facing == 'up':
