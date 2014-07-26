@@ -1,10 +1,19 @@
 import libtcodpy as libtcod
+<<<<<<< HEAD
 def SCREEN_WIDTH = 80
 def SCREEN_HEIGHT = 50
 def LIMIT_FPS = 20
 libtcod.console_set_custom_font ('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TC0D)
 libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', false)
 def con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
+=======
+SCREEN_WIDTH = 80
+SCREEN_HEIGHT = 50
+LIMIT_FPS = 20
+libtcod.console_set_custom_font ('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TC0D)
+libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', false)
+con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
+>>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
 libtcod.sys_set_fps(LIMIT_FPS)
 
 class actor:
@@ -89,6 +98,7 @@ class actor:
 #Combat Functions
 def damage(target, origin, hand):
     if origin.hand.skill == 'None' and origin.hand.sort == 'Melee':
+<<<<<<< HEAD
     	def origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
 	    def target_resist = (target.STR * target.suit.power + target.suit.protection)
 	    def damage_dealt = origin_damage - target_resist
@@ -96,6 +106,15 @@ def damage(target, origin, hand):
         target.HPcurr -= 1
 	  elif damage_dealt >= 1 :
 		    target.HPcurr = target.HPcurr - damage_dealt
+=======
+    	origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
+	target_resist = (target.STR * target.suit.power + target.suit.protection)
+	damage_dealt = origin_damage - target_resist
+	if damage_dealt < 1 :
+		target.HPcurr -= 1
+	elif damage_dealt >= 1 :
+		target.HPcurr = target.HPcurr - damage_dealt
+>>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
 		if target.HPcurr <= 0 :
 			#target.drop()
 	
@@ -108,6 +127,7 @@ def melee_atk(origin, hand, facing):
 
 def fist_attack(origin, facing, weapon):
     if facing == 'up'
+<<<<<<< HEAD
 	      libtcod.console_put_char(con, origin.x, origin.y - 1, '.', libtcod.BKGND_NONE)
 	      for object in actors:
 		        if object.x == origin.x and object.y == origin.y - 1:
@@ -182,6 +202,32 @@ def dagger_attack(origin, facing, weapon):
 #Beam Attack (line, background & foreground)
 
                     
+=======
+	put_char(con, origin.x, origin.y - 1, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x and object.y == origin.y - 1:
+			damage(object, origin, weapon)
+			put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
+    if facing == 'down'
+	put_char(con, origin.x, origin.y + 1, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x and object.y == origin.y + 1:
+			damage(object, origin, weapon)
+			put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
+    if facing == 'left'
+	put_char(con, origin.x - 1, origin.y, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x - 1 and object.y == origin.y - 1:
+			damage(object, origin, weapon)
+			put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
+    if facing == 'right'
+	put_char(con, origin.x + 1, origin.y, '.', libtcod.BKGND_NONE)
+	for object in actors:
+		if object.x == origin.x + 1 and object.y == origin.y:
+			damage(object, origin, weapon)
+			put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
+        
+>>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
 def do_nothing():
 	print 'Unfortunately, this does nothing.'
 
@@ -211,8 +257,13 @@ def shield:
 
 #Melee weapons
 weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
+<<<<<<< HEAD
 weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_attack())
 weap_dagger = weapon(5, 1, 'None', 'Blade', 1, dagger_attack())
+=======
+weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_atk())
+
+>>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
 #Ranged Weapons
 
 #Suits
@@ -314,10 +365,18 @@ pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yell
 actors = [player, pbag]
 
 while not libtcod.is_window_closed():
+<<<<<<< HEAD
     render_all()
     
     libtcod.console_set_default_foreground(con, libtcod.silver)
     libtcod.console_flush()
+=======
+render_all()
+    
+    libtcod.console_set_default_foreground(con, libtcod.silver)
+    libtcod.console_flush()
+   
+>>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
     for object in actors:
         actor.clear()
         

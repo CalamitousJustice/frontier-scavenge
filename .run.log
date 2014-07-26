@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File ".last_tmp.py", line 1, in <module>
+    import libtcodpy as libtcod
+  File "/storage/sdcard0/com.hipipal.qpyplus/lib/python2.7/site-packages/libtcodpy.py", line 29, in <module>
+    import ctypes
+  File "/storage/sdcard0/com.hipipal.qpyplus/lib/python2.7/site-packages/ctypes/__init__.py", line 10, in <module>
+    from _ctypes import Union, Structure, Array
+ImportError: No module named _ctypes
+
