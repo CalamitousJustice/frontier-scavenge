@@ -1,19 +1,12 @@
 import libtcodpy as libtcod
-<<<<<<< HEAD
+
 def SCREEN_WIDTH = 80
 def SCREEN_HEIGHT = 50
 def LIMIT_FPS = 20
 libtcod.console_set_custom_font ('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TC0D)
-libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', false)
+libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', False)
 def con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
-=======
-SCREEN_WIDTH = 80
-SCREEN_HEIGHT = 50
-LIMIT_FPS = 20
-libtcod.console_set_custom_font ('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TC0D)
-libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', false)
-con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
->>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
+def swing = 1
 libtcod.sys_set_fps(LIMIT_FPS)
 
 class actor:
@@ -188,7 +181,220 @@ def dagger_attack(origin, facing, weapon):
                     object.move(1,0)
 			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)                    
 #Sword Attack
+def sword_attack(origin, facing, weapon):  
+    if facing == 'up'
+	      if swing = 1:
+            swing + 1
+            libtcod.console_put_char(con, origin.x + 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y - 1, '/', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x, origin.y - 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y - 1, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
+	  elif swing = 2:
+            swing - 1
+            libtcod.console_put_char(con, origin.x - 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y - 1, '\', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x, origin.y - 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y - 1, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(0,-1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
 
+    if facing == 'down'
+	      if swing = 1:
+            swing + 1
+            libtcod.console_put_char(con, origin.x - 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(0, 1)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y + 1, '/', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x, origin.y + 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y + 1, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y + 1, ' ', libtcod.BKGND_NONE)	         elif swing = 2:
+            swing - 1
+            libtcod.console_put_char(con, origin.x + 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y + 1, '\', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x, origin.y + 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y + 1, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(0,1)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y + 1, ' ', libtcod.BKGND_NONE)
+        
+    if facing == 'left'
+	      if swing = 1:
+            swing + 1
+            libtcod.console_put_char(con, origin.x, origin.y + 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(-1, 0)
+			              libtcod.console_put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y + 1, '/', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y - 1, '/', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
+	      elif swing = 2:
+            swing - 1
+            libtcod.console_put_char(con, origin.x, origin.y - 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y - 1, '\', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x - 1, origin.y + 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x - 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(-1,0)
+			              libtcod.console_put_char(con, origin.x - 1, origin.y + 1, ' ', libtcod.BKGND_NONE)            
+    if facing == 'right'
+	      if swing = 1:
+            swing + 1
+            libtcod.console_put_char(con, origin.x, origin.y - 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(1, 0)
+			              libtcod.console_put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y - 1, '/', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y - 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y + 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y + 1, ' ', libtcod.BKGND_NONE)
+	      elif swing = 2:
+            swing - 1
+            libtcod.console_put_char(con, origin.x, origin.y + 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y + 1, '\', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y + 1):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y + 1, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y, '_', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, origin.x + 1, origin.y - 1, '|', libtcod.BKGND_NONE)
+	          for object in actors:
+		            if collision(object, origin.x + 1, origin.y - 1):
+			              damage(object, origin, weapon)
+                    object.move(1,0)
+			              libtcod.console_put_char(con, origin.x + 1, origin.y - 1, ' ', libtcod.BKGND_NONE)   	          
 #Whip Attack
 
 #Hammer Attack
