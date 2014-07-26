@@ -1,12 +1,12 @@
 import libtcodpy as libtcod
 
-def SCREEN_WIDTH = 80
-def SCREEN_HEIGHT = 50
-def LIMIT_FPS = 20
+SCREEN_WIDTH = 80
+SCREEN_HEIGHT = 50
+LIMIT_FPS = 20
 libtcod.console_set_custom_font ('arial10x10.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TC0D)
 libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', False)
-def con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
-def swing = 1
+con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
+swing = 1
 libtcod.sys_set_fps(LIMIT_FPS)
 
 class actor:
@@ -92,9 +92,9 @@ class actor:
 def damage(target, origin, hand):
     if origin.hand.skill == 'None' and origin.hand.sort == 'Melee':
 
-    	  def origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
-	      def target_resist = (target.STR * target.suit.power + target.suit.protection)
-	      def damage_dealt = origin_damage - target_resist
+    	  origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
+	      target_resist = (target.STR * target.suit.power + target.suit.protection)
+	      damage_dealt = origin_damage - target_resist
 	      if damage_dealt < 1 :
             target.HPcurr -= 1
 	      elif damage_dealt >= 1 :
@@ -423,7 +423,7 @@ def pulse_attack(origin, facing, weapon):
 	      for object in actors:
             if object.x > origin.x:
                 targets.append(object)
-    def target_diff = [weapon.dist, weapon.dist]
+    target_diff = [weapon.dist, weapon.dist]
     for object in targets:
         def object.dist_from_origin == [|(object.x - origin.x)|, |(object.y - origin.y)|]
         if object.dist_from_origin[1] <= target_diff[1] and object.dist_from_origin[2] <= target_diff[2]:
