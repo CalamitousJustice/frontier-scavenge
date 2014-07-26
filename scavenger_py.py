@@ -150,7 +150,8 @@ def fist_attack(origin, facing, weapon):
 			              damage(object, origin, weapon)
                     object.move(1,0)
 			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
-                    
+    origin.fire = False
+
 def dagger_attack(origin, facing, weapon):
     if facing == 'up'
 	      libtcod.console_put_char(con, origin.x, origin.y - 1, '|', libtcod.BKGND_NONE)
@@ -179,7 +180,7 @@ def dagger_attack(origin, facing, weapon):
 		            if collision(object, origin.x + 1, origin.y):
 			              damage(object, origin, weapon)
                     object.move(1,0)
-			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)                    
+			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)           origin.fire = False         
 #Sword Attack
 def sword_attack(origin, facing, weapon):  
     if facing == 'up'
@@ -394,7 +395,7 @@ def sword_attack(origin, facing, weapon):
 		            if collision(object, origin.x + 1, origin.y - 1):
 			              damage(object, origin, weapon)
                     object.move(1,0)
-			              libtcod.console_put_char(con, origin.x + 1, origin.y - 1, ' ', libtcod.BKGND_NONE)   	          
+			              libtcod.console_put_char(con, origin.x + 1, origin.y - 1, ' ', libtcod.BKGND_NONE)   	   origin.fire = False   
 #Whip Attack
 
 #Hammer Attack
@@ -402,40 +403,54 @@ def sword_attack(origin, facing, weapon):
 #Impact Mace Attack
 
 #Pulse Attack(single shot)
-
+def pulse_attack(origin, facing, weapon):
+    def targets = []    
+    if facing == 'up':
+	      for object in actors:
+            if object.y < origin.y:
+                targets.append(object)
+    if facing == 'down':
+	      for object in actors:
+            if object.y > origin.y:
+                targets.append(object)
+    if facing == 'left':
+	      for object in actors:
+            if object.x < origin.x:
+                targets.append(object)
+    if facing == 'right':
+	      for object in actors:
+            if object.x > origin.x:
+                targets.append(object)
+    def target_diff = [weapon.dist, weapon.dist]
+    for object in targets:
+        def object.dist_from_origin == [|(object.x - origin.x)|, |(object.y - origin.y)|]
+        if object.dist_from_origin[1] <= target_diff[1] and object.dist_from_origin[2] <= target_diff[2]:
+            origin.closest_target = object 
+        for sx and sy and sd in range(0, weapon.dist):
+            if map[(origin.x + sx)][origin.y + sy].blockpass:
+                break
+            if sd > weapon.dist:
+                break
+            if origin.closest_target.x < origin.x:
+                sx -= 1
+            if origin.closest_target.y < origin.y
+                sy -= 1
+            if origin.closest_target.x > origin.x:
+                sx += 1
+            if origin.closest_target.y > origin.y
+                sy += 1                         
+                libtcod.console_put_char(con, origin.x + sx, origin.y + sy, '*', libtcod.BKGND_NONE)
+                if collision(origin.x + sx, origin.y + sy):
+                    damage(origin.closest_target, hand, weapon)
+                    libtcod.console_put_char(con, origin.x + sx, origin.y + sy, ' ', libtcod.BKGND_NONE)  
+                    break                                     
+                libtcod.console_put_char(con, origin.x + sx, origin.y + sy, ' ', libtcod.BKGND_NONE)                       sd + 1             
 #Laser Attack(line)
 
 #Blast Attack(cone)
 
 #Beam Attack (line, background & foreground)
 
-                    
-=======
-	put_char(con, origin.x, origin.y - 1, '.', libtcod.BKGND_NONE)
-	for object in actors:
-		if object.x == origin.x and object.y == origin.y - 1:
-			damage(object, origin, weapon)
-			put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
-    if facing == 'down'
-	put_char(con, origin.x, origin.y + 1, '.', libtcod.BKGND_NONE)
-	for object in actors:
-		if object.x == origin.x and object.y == origin.y + 1:
-			damage(object, origin, weapon)
-			put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
-    if facing == 'left'
-	put_char(con, origin.x - 1, origin.y, '.', libtcod.BKGND_NONE)
-	for object in actors:
-		if object.x == origin.x - 1 and object.y == origin.y - 1:
-			damage(object, origin, weapon)
-			put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
-    if facing == 'right'
-	put_char(con, origin.x + 1, origin.y, '.', libtcod.BKGND_NONE)
-	for object in actors:
-		if object.x == origin.x + 1 and object.y == origin.y:
-			damage(object, origin, weapon)
-			put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
-        
->>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
 def do_nothing():
 	print 'Unfortunately, this does nothing.'
 
