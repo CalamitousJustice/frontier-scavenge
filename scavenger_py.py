@@ -98,27 +98,29 @@ class actor:
 #Combat Functions
 def damage(target, origin, hand):
     if origin.hand.skill == 'None' and origin.hand.sort == 'Melee':
-<<<<<<< HEAD
-    	def origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
-	    def target_resist = (target.STR * target.suit.power + target.suit.protection)
-	    def damage_dealt = origin_damage - target_resist
-	    if damage_dealt < 1 :
-        target.HPcurr -= 1
-	  elif damage_dealt >= 1 :
-		    target.HPcurr = target.HPcurr - damage_dealt
-=======
-    	origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
-	target_resist = (target.STR * target.suit.power + target.suit.protection)
-	damage_dealt = origin_damage - target_resist
-	if damage_dealt < 1 :
-		target.HPcurr -= 1
-	elif damage_dealt >= 1 :
-		target.HPcurr = target.HPcurr - damage_dealt
->>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
-		if target.HPcurr <= 0 :
-			#target.drop()
-	
 
+    	  def origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
+	      def target_resist = (target.STR * target.suit.power + target.suit.protection)
+	      def damage_dealt = origin_damage - target_resist
+	      if damage_dealt < 1 :
+            target.HPcurr -= 1
+	      elif damage_dealt >= 1 :
+		        target.HPcurr = target.HPcurr - damage_dealt
+
+    	      origin_damage = (origin.STR * origin.suit.power + origin.hand.power)
+	          target_resist = (target.STR * target.suit.power + target.suit.protection)
+	          damage_dealt = origin_damage - target_resist
+  	            if damage_dealt < 1 :
+		                target.HPcurr -= 1
+	              elif damage_dealt >= 1 :
+		                target.HPcurr = target.HPcurr - damage_dealt
+
+		            if target.HPcurr <= 0 :
+			              #target.drop()
+	
+def collision(target, cx, cy):
+      if target.x == cx and target.y == cy
+          return 'True'
 #Melee Weapon Functions
 def melee_atk(origin, hand, facing):
     If origin.fire != True :
@@ -127,31 +129,31 @@ def melee_atk(origin, hand, facing):
 
 def fist_attack(origin, facing, weapon):
     if facing == 'up'
-<<<<<<< HEAD
+
 	      libtcod.console_put_char(con, origin.x, origin.y - 1, '.', libtcod.BKGND_NONE)
-	      for object in actors:
-		        if object.x == origin.x and object.y == origin.y - 1:
+		    for object in actors:    
+            if collision(object, origin.x, origin.y - 1):
 			          damage(object, origin, weapon)
                 object.move(0,-1)
 			          libtcod.console_put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
     if facing == 'down'
         put_char(con, origin.x, origin.y + 1, '.', libtcod.BKGND_NONE)
 	      for object in actors:
-		        if object.x == origin.x and object.y == origin.y + 1:
+		        if collision(object, origin.x, origin.y + 1):
 			          damage(object, origin, weapon)
                 object.move(0,1)
 			          libtcod.console_put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
         if facing == 'left'
             put_char(con, origin.x - 1, origin.y, '.', libtcod.BKGND_NONE)
 	          for object in actors:
-		            if object.x == origin.x - 1 and object.y == origin.y:
+		            if collision(object, origin.x - 1, origin.y):
 			              damage(object, origin, weapon)
                     object.move(-1,0)
 			              libtod.console_put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
         if facing == 'right'
 	          put_char(con, origin.x + 1, origin.y, '.', libtcod.BKGND_NONE)
 	          for object in actors:
-		            if object.x == origin.x + 1 and object.y == origin.y:
+		            if collision(object, origin.x + 1, origin.y):
 			              damage(object, origin, weapon)
                     object.move(1,0)
 			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)
@@ -160,28 +162,28 @@ def dagger_attack(origin, facing, weapon):
     if facing == 'up'
 	      libtcod.console_put_char(con, origin.x, origin.y - 1, '|', libtcod.BKGND_NONE)
 	      for object in actors:
-		        if object.x == origin.x and object.y == origin.y - 1:
+		        if collision(object, origin.x, origin.y - 1):
 			          damage(object, origin, weapon)
                 object.move(0,-1)
 			          libtcod.console_put_char(con, origin.x, origin.y - 1, ' ', libtcod.BKGND_NONE)
     if facing == 'down'
         put_char(con, origin.x, origin.y + 1, '|', libtcod.BKGND_NONE)
 	      for object in actors:
-		        if object.x == origin.x and object.y == origin.y + 1:
+		        if collision(object, origin.x, origin.y + 1):
 			          damage(object, origin, weapon)
                 object.move(0,1)
 			          libtcod.console_put_char(con, origin.x, origin.y + 1, ' ', libtcod.BKGND_NONE)
         if facing == 'left'
             put_char(con, origin.x - 1, origin.y, '_', libtcod.BKGND_NONE)
 	          for object in actors:
-		            if object.x == origin.x - 1 and object.y == origin.y:
+		            if collision(object, origin.x - 1, origin.y):
 			              damage(object, origin, weapon)
                     object.move(-1,0)
 			              libtod.console_put_char(con, origin.x - 1, origin.y, ' ', libtcod.BKGND_NONE)
         if facing == 'right'
 	          put_char(con, origin.x + 1, origin.y, '_', libtcod.BKGND_NONE)
 	          for object in actors:
-		            if object.x == origin.x + 1 and object.y == origin.y:
+		            if collision(object, origin.x + 1, origin.y):
 			              damage(object, origin, weapon)
                     object.move(1,0)
 			              libtcod.console_put_char(con, origin.x + 1, origin.y, ' ', libtcod.BKGND_NONE)                    
@@ -257,14 +259,22 @@ def shield:
 
 #Melee weapons
 weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
-<<<<<<< HEAD
+
+#Blades
 weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_attack())
 weap_dagger = weapon(5, 1, 'None', 'Blade', 1, dagger_attack())
-=======
-weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_atk())
 
->>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
+#Whips
+
+#Hammers
+
 #Ranged Weapons
+
+#Pistols
+
+#Rifles
+
+#Heavy_Weapons
 
 #Suits
 suit_skillsuit = suit(1.1, 10)
@@ -365,18 +375,18 @@ pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yell
 actors = [player, pbag]
 
 while not libtcod.is_window_closed():
-<<<<<<< HEAD
+
     render_all()
     
     libtcod.console_set_default_foreground(con, libtcod.silver)
     libtcod.console_flush()
-=======
+
 render_all()
     
     libtcod.console_set_default_foreground(con, libtcod.silver)
     libtcod.console_flush()
    
->>>>>>> 243a96f24e810ec2e9ff2854fd2863462246a011
+
     for object in actors:
         actor.clear()
         
