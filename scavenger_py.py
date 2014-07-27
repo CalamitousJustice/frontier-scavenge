@@ -35,7 +35,7 @@ class actor:
         self.allegiance = allegiance
         self.status = status
         self.fire = fire
-        self.drop = drop
+        self.drops = list(drop)
     
         #skills
         self.mobility = mobility
@@ -88,7 +88,10 @@ class actor:
         def clear (self):
             #Clears character
             libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
-        
+        def drop(self):
+            self.clear()
+            actors.remove(self)
+            
 #Combat Functions
 def damage(target, original, hand):
     if original.hand.skill == 'None' and original.hand.sort == 'Melee':    
@@ -476,6 +479,24 @@ def shield():
     self.powercurr = powermax
     self.regentime = regentime
 
+def mapitem():
+    __init__(self, ident, x, y, char, color)
+    self.ident = ident
+    self.x = x
+    self.y = y
+    self.char = char
+    self.color = color
+    def draw (self):
+        #draws character in color to con
+        libtcod.console_set_default_foreground(con, self.color)
+        libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
+    def clear (self):
+        #Clears character
+        libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
+    def drop(self):
+        self.clear()
+        mapitems.remove(self)
+        
 #Melee weapons
 weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
 
@@ -578,6 +599,8 @@ def handle_keys ():
 def render_all():
     for object in actors:
         object.draw()
+    for object in mapitems:
+        object.draw()
     for y in range (map_HEIGHT):
         for x in range(map_WIDTH):
             wall = map [x][y].blocksight
@@ -590,8 +613,8 @@ libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 # Incoming main loop 
 pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
-actors = [player, pbag]
-
+actors = list(player, pbag)
+mapitems = list ()
 while not libtcod.is_window_closed():
 
     render_all()
