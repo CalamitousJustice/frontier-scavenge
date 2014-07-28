@@ -1,5 +1,8 @@
 import sys
+from sys import path as syspath
+syspath.append('.//libtcod-1.6.0')
 import libtcodpy as libtcod
+
 
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50
@@ -7,7 +10,7 @@ LIMIT_FPS = 20
 libtcod.console_set_custom_font ('terminal8x8_gs_tc.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
 libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', False)
 con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
-swing = 1
+framecount = 0
 libtcod.sys_set_fps(LIMIT_FPS)
 
 class actor:
@@ -37,6 +40,9 @@ class actor:
         self.fire = fire
         self.drops = list(drops)
         self.movelock = False
+        self.sneak = False
+        self.swing = 1
+        
         #skills
         self.mobility = mobility
         self.blades = blades
@@ -62,7 +68,7 @@ class actor:
 
     #functions
         def move(self, dx, dy):
-            if not map[self.x + dx][self.x + dx].blockpass and if self.movelock == False:
+            if not map[self.x + dx][self.x + dx].blockpass and self.movelock == False:
                 self.x += dx
                 self.y += dy
                 if dx < 0:
@@ -178,9 +184,10 @@ def dagger_attack(original, facing, weapon):
     original.fire = False         
 #Sword Attack
 def sword_attack(original, facing, weapon):  
+
     if facing == 'up':
-        if swing == 1:
-            swing += 1
+        if original.swing == 1:
+            original.swing += 1
             libtcod.console_put_char(con, original.x + 1, original.y, '_', libtcod.BKGND_NONE)
             for object in actors:
               if collision(object, original.x + 1, original.y):
@@ -205,8 +212,8 @@ def sword_attack(original, facing, weapon):
                     damage(object, original, weapon)
                     object.move(0,-1)
                     libtcod.console_put_char(con, original.x - 1, original.y - 1, ' ', libtcod.BKGND_NONE)
-    elif swing == 2:
-        swing -= 1
+    elif original.swing == 2:
+        original.swing -= 1
         libtcod.console_put_char(con, original.x - 1, original.y, '_', libtcod.BKGND_NONE)
         for object in actors:
             if collision(object, original.x - 1, original.y):
@@ -233,8 +240,8 @@ def sword_attack(original, facing, weapon):
                             libtcod.console_put_char(con, original.x + 1, original.y - 1, ' ', libtcod.BKGND_NONE)
 
     if facing == 'down':
-        if swing == 1:
-            swing += 1
+        if original.swing == 1:
+            original.swing += 1
             libtcod.console_put_char(con, original.x - 1, original.y, '_', libtcod.BKGND_NONE)
             for object in actors:
                 if collision(object, original.x - 1, original.y):
@@ -259,8 +266,8 @@ def sword_attack(original, facing, weapon):
                     damage(object, original, weapon)
                     object.move(0,1)
                     libtcod.console_put_char(con, original.x + 1, original.y + 1, ' ', libtcod.BKGND_NONE)	         
-        elif swing == 2:
-            swing -= 1
+        elif original.swing == 2:
+            original.swing -= 1
             libtcod.console_put_char(con, original.x + 1, original.y, '_', libtcod.BKGND_NONE)
             for object in actors:
                 if collision(object, original.x + 1, original.y):
@@ -287,8 +294,8 @@ def sword_attack(original, facing, weapon):
                     libtcod.console_put_char(con, original.x + 1, original.y + 1, ' ', libtcod.BKGND_NONE)
         
     if facing == 'left':
-        if swing == 1:
-            swing += 1
+        if original.swing == 1:
+            original.swing += 1
             libtcod.console_put_char(con, original.x, original.y + 1, '|', libtcod.BKGND_NONE)
             for object in actors:
                 if collision(object, original.x, original.y + 1):
@@ -313,8 +320,8 @@ def sword_attack(original, facing, weapon):
                     damage(object, original, weapon)
                     object.move(-1,0)
                     libtcod.console_put_char(con, original.x - 1, original.y - 1, ' ', libtcod.BKGND_NONE)
-        elif swing == 2:
-            swing -= 1
+        elif original.swing == 2:
+            original.swing -= 1
             libtcod.console_put_char(con, original.x, original.y - 1, '|', libtcod.BKGND_NONE)
             for object in actors:
                 if collision(object, original.x, original.y - 1):
@@ -340,8 +347,8 @@ def sword_attack(original, facing, weapon):
                     object.move(-1,0)
                     libtcod.console_put_char(con, original.x - 1, original.y + 1, ' ', libtcod.BKGND_NONE)            
     if facing == 'right':
-        if swing == 1:
-            swing += 1
+        if original.swing == 1:
+            original.swing += 1
             libtcod.console_put_char(con, original.x, original.y - 1, '|', libtcod.BKGND_NONE)
             for object in actors:
                 if collision(object, original.x, original.y - 1):
@@ -366,8 +373,8 @@ def sword_attack(original, facing, weapon):
                     damage(object, original, weapon)
                     object.move(1,0)
                     libtcod.console_put_char(con, original.x + 1, original.y + 1, ' ', libtcod.BKGND_NONE)
-        elif swing == 2:
-            swing -= 1
+        elif original.swing == 2:
+            original.swing -= 1
             libtcod.console_put_char(con, original.x, original.y + 1, '|', libtcod.BKGND_NONE)
             for object in actors:
                 if collision(object, original.x, original.y + 1):
@@ -406,23 +413,23 @@ def pulse_attack(original, facing, weapon):
     targets = list()
     if facing == 'up':
         for object in actors:
-            if object.y < original.y:
+            if object.y < original.y and object.allegiance != original.allegiance:
                 targets.append(object)
     if facing == 'down':
         for object in actors:
-            if object.y > original.y:
+            if object.y > original.y and object.allegiance != original.allegiance:
                 targets.append(object)
     if facing == 'left':
         for object in actors:
-            if object.x < original.x:
+            if object.x < original.x and object.allegiance != original.allegiance:
                 targets.append(object)
     if facing == 'right':
         for object in actors:
-            if object.x > original.x:
+            if object.x > original.x and object.allegiance != original.allegiance:
                 targets.append(object)
     target_diff = [weapon.dist, weapon.dist]
     for object in targets:
-        object.dist_from_original == [abs(object.x - original.x), abs(object.y - original.y)]
+        object.dist_from_original = [abs(object.x - original.x), abs(object.y - original.y)]
         if object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
             original.closest_target = object 
         for sx, sy, sd in range(0, weapon.dist):
@@ -584,7 +591,7 @@ def handle_keys ():
         elif player.hnd2.dist == 1 and player.fire == False:
             melee_atk (player, hnd2, player.face)
         elif player.hnd1.dist != 1 and player.hnd2.dist != 1:
-            print 'No melee weapon equipped!'
+            fist_attack (player, player.face, fist)
             
 #Ranged attack(player)
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(r)):
@@ -597,10 +604,11 @@ def handle_keys ():
  
 #rendering
 def render_all():
-    for object in actors:
-        object.draw()
     for object in mapitems:
         object.draw()
+    for object in actors:
+        object.draw()
+
     for y in range (map_HEIGHT):
         for x in range(map_WIDTH):
             wall = map [x][y].blocksight
@@ -616,14 +624,15 @@ pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yell
 actors = list(player, pbag)
 mapitems = list ()
 while not libtcod.is_window_closed():
-
+    framecount += 1
     render_all()
     
     libtcod.console_set_default_foreground(con, libtcod.silver)
     libtcod.console_flush()
-
+    for object in mapitems:
+        object.clear()
     for object in actors:
-        actor.clear()
+        object.clear()
         
     exit = handle_keys()
     if exit:
