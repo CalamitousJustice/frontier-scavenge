@@ -12,7 +12,7 @@ libtcod.sys_set_fps(LIMIT_FPS)
 
 class actor:
 
-    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drop, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
+    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
         self.name = name
         self.gender = gender
         self.species = species
@@ -35,8 +35,8 @@ class actor:
         self.allegiance = allegiance
         self.status = status
         self.fire = fire
-        self.drops = list(drop)
-    
+        self.drops = list(drops)
+        self.movelock = False
         #skills
         self.mobility = mobility
         self.blades = blades
@@ -62,7 +62,7 @@ class actor:
 
     #functions
         def move(self, dx, dy):
-            if not map[self.x + dx][self.x + dx].blockpass:
+            if not map[self.x + dx][self.x + dx].blockpass and if self.movelock == False:
                 self.x += dx
                 self.y += dy
                 if dx < 0:
