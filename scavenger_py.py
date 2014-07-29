@@ -2,7 +2,6 @@ import sys
 from sys import path as syspath
 syspath.append('.//libtcod-1.6.0')
 import libtcodpy as libtcod
-pip 
 
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50

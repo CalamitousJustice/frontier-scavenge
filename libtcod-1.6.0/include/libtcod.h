@@ -67,6 +67,15 @@
 #  define TCOD_WINDOWS
 #  define TCOD_MINGW32
 #  define TCOD_WIN32
+#elif defined( __MINGW64__ )
+#  define TCOD_WINDOWS
+#  define TCOD_MINGW32
+#  ifdef _WIN64
+#    define TCOD_WIN64
+#    define TCOD_64BITS
+#  else
+#    define TCOD_WIN32
+#  endif   
 #elif defined( __HAIKU__ )
 #  define TCOD_HAIKU
 #  define TCOD_GCC
@@ -119,8 +128,13 @@ typedef unsigned int uint32;
 typedef int int32;
 #endif
 /* int with the same size as a pointer (32 or 64 depending on OS) */
+#ifdef TCOD_WIN64
+typedef long long intptr;
+typedef unsigned long long uintptr;
+#else
 typedef long intptr;
 typedef unsigned long uintptr;
+#endif
 
 #define TCOD_HEXVERSION 0x010600
 #define TCOD_STRVERSION "1.6.0"
