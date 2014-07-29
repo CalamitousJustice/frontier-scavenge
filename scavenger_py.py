@@ -1,5 +1,6 @@
 import sys
-
+from sys import path as syspath
+syspath.append('.//libtcod-1.6.0')
 import libtcodpy as libtcod
 
 SCREEN_WIDTH = 80
@@ -401,7 +402,326 @@ def sword_attack(original, facing, weapon):
 #Whip Attack
 
 #Hammer Attack
+def hammer_attack(original, facing, weapon):  
+    original.movelock = True
+    if facing == 'up':
+        if original.swing == 1:
+            original.swing += 1
+            hamatk = animation(original.x - 1, original.y +1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x - 1, original.y + 1):
+                  damage(object, original, weapon)
+                  object.move(0,-1)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x - 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(0,-1)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x - 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(1,0)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x + 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.drop()
+    elif original.swing == 2:
+            original.swing -= 1
+            hamatk = animation(original.x + 1, original.y + 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x + 1, original.y + 1):
+                  damage(object, original, weapon)
+                  object.move(0,-1)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x + 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(0,-1)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x + 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(-1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(-1,0)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x - 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.move(0,1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x - 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,-2)
+            hamatk.drop()
 
+    if facing == 'down':
+        if original.swing == 1:
+            original.swing += 1
+            hamatk = animation(original.x - 1, original.y - 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x - 1, original.y - 1):
+                  damage(object, original, weapon)
+                  object.move(0,1)
+            hamatk.move(0,1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x - 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(0,1)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x - 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(1,0)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x + 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x + 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.drop()
+    elif original.swing == 2:
+            original.swing -= 1
+            hamatk = animation(original.x + 1, original.y - 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x + 1, original.y - 1):
+                  damage(object, original, weapon)
+                  object.move(0,1)
+            hamatk.move(0,1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x + 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(0,1)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x + 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(-1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(-1,0)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x - 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x - 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(0,2)
+            hamatk.drop()
+    if facing == 'left':
+        if original.swing == 1:
+            original.swing += 1
+            hamatk = animation(original.x + 1, original.y + 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x + 1, original.y + 1):
+                  damage(object, original, weapon)
+                  object.move(-1,0)
+            hamatk.move(-1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(-1,0)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x - 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x - 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(0,-1)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x - 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(-2, 0)
+            hamatk.move(1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.drop()
+    elif original.swing == 2:
+            original.swing -= 1
+            hamatk = animation(original.x + 1, original.y - 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x + 1, original.y - 1):
+                  damage(object, original, weapon)
+                  object.move(-1,0)
+            hamatk.move(-1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(-1,0)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x - 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(0,1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x - 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(0,1)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x - 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.move(1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(-2,0)
+            hamatk.drop()
+    if facing == 'right':
+        if original.swing == 1:
+            original.swing += 1
+            hamatk = animation(original.x - 1, original.y - 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x - 1, original.y - 1):
+                  damage(object, original, weapon)
+                  object.move(1,0)
+            hamatk.move(1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(1,0)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x + 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(0,1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x + 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(0,1)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x + 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(2, 0)
+            hamatk.move(-1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.drop()
+    elif original.swing == 2:
+            original.swing -= 1
+            hamatk = animation(original.x - 1, original.y + 1, 'x', libtcod.silver)
+            hamatk.draw()
+            for object in actors:
+                if collision(object, original.x - 1, original.y + 1):
+                  damage(object, original, weapon)
+                  object.move(1,0)
+            hamatk.move(1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(1,0)
+            hamatk.char = 'x'    
+            for object in actors:
+                if collision(object, original.x + 1, original.y + 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(0,-1)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x + 1, original.y):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(0,-1)
+            hamatk.char = 'x'
+            for object in actors:
+                if collision(object, original.x + 1, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.move(-1,0)
+            hamatk.char = '+'
+            for object in actors:
+                if collision(object, original.x, original.y - 1):
+                    damage(object, original, weapon)
+                    object.move(2,0)
+            hamatk.drop()
+    original.movelock = False
 #Impact Mace Attack
 
 #Pulse Attack(single shot)
@@ -495,6 +815,7 @@ def mapitem():
         #draws character in color to con
         libtcod.console_set_default_foreground(con, self.color)
         libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
+        mapitems.append(self)
     def clear (self):
         #Clears character
         libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
@@ -502,6 +823,23 @@ def mapitem():
         self.clear()
         mapitems.remove(self)
         
+def animation():
+    __init__(self, x, y, char, color)
+    self.x = x
+    self.y = y
+    self.char = char
+    self.color = color
+    def draw (self):
+        #draws character in color to con
+        libtcod.console_set_default_foreground(con, self.color)
+        libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
+        animations.append(self)
+    def clear (self):
+        #Clears character
+        libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
+    def drop(self):
+        self.clear()
+        animations.remove(self)        
 #Melee weapons
 weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
 
@@ -512,6 +850,7 @@ weap_dagger = weapon(5, 1, 'None', 'Blade', 1, dagger_attack())
 #Whips
 
 #Hammers
+weap_autohammer = weapon(20, 1, 'hammers', 'Melee', 2, hammer_attack())
 
 #Ranged Weapons
 
@@ -606,7 +945,9 @@ def render_all():
         object.draw()
     for object in actors:
         object.draw()
-
+    for objects in animations:
+        object.draw()
+        
     for y in range (map_HEIGHT):
         for x in range(map_WIDTH):
             wall = map [x][y].blocksight
@@ -621,6 +962,7 @@ pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yell
 
 actors = list(player, pbag)
 mapitems = list ()
+animations = list ()
 while not libtcod.is_window_closed():
     framecount += 1
     render_all()
@@ -631,7 +973,8 @@ while not libtcod.is_window_closed():
         object.clear()
     for object in actors:
         object.clear()
-        
+    for object in animations:
+        object.clear()
     exit = handle_keys()
     if exit:
         break
