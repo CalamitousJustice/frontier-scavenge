@@ -832,7 +832,9 @@ def animation():
     def draw (self):
         #draws character in color to con
         libtcod.console_set_default_foreground(con, self.color)
-        libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
+        if self.color == libtcod.yellow:
+            libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.orange)
+        else libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
         animations.append(self)
     def clear (self):
         #Clears character
@@ -845,7 +847,7 @@ weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
 
 #Blades
 weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_attack())
-weap_dagger = weapon(5, 1, 'None', 'Blade', 1, dagger_attack())
+weap_dagger = weapon(5, 1, 'blades', 'Melee', 1, dagger_attack())
 
 #Whips
 
