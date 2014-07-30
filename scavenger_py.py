@@ -750,7 +750,7 @@ def pulse_attack(original, facing, weapon):
         object.dist_from_original = [abs(object.x - original.x), abs(object.y - original.y)]
         if object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
             original.closest_target = object 
-        for sx, sy, sd in range(0, weapon.dist):
+        for sx, sy, sd in range(1, weapon.dist):
             if map[(original.x + sx)][original.y + sy].blockpass:
                 break
             if sd > weapon.dist:
