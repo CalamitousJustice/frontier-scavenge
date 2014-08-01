@@ -12,7 +12,7 @@ con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
 framecount = 0
 libtcod.sys_set_fps(LIMIT_FPS)
 
-class actor:
+class ACTOR:
 
     def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
         self.name = name
@@ -407,7 +407,7 @@ def hammer_attack(original, facing, weapon):
     if facing == 'up':
         if original.swing == 1:
             original.swing += 1
-            hamatk = animation(original.x - 1, original.y +1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x - 1, original.y +1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x - 1, original.y + 1):
@@ -446,7 +446,7 @@ def hammer_attack(original, facing, weapon):
             hamatk.drop()
     elif original.swing == 2:
             original.swing -= 1
-            hamatk = animation(original.x + 1, original.y + 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x + 1, original.y + 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x + 1, original.y + 1):
@@ -487,7 +487,7 @@ def hammer_attack(original, facing, weapon):
     if facing == 'down':
         if original.swing == 1:
             original.swing += 1
-            hamatk = animation(original.x - 1, original.y - 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x - 1, original.y - 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x - 1, original.y - 1):
@@ -526,7 +526,7 @@ def hammer_attack(original, facing, weapon):
             hamatk.drop()
     elif original.swing == 2:
             original.swing -= 1
-            hamatk = animation(original.x + 1, original.y - 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x + 1, original.y - 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x + 1, original.y - 1):
@@ -566,7 +566,7 @@ def hammer_attack(original, facing, weapon):
     if facing == 'left':
         if original.swing == 1:
             original.swing += 1
-            hamatk = animation(original.x + 1, original.y + 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x + 1, original.y + 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x + 1, original.y + 1):
@@ -605,7 +605,7 @@ def hammer_attack(original, facing, weapon):
             hamatk.drop()
     elif original.swing == 2:
             original.swing -= 1
-            hamatk = animation(original.x + 1, original.y - 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x + 1, original.y - 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x + 1, original.y - 1):
@@ -645,7 +645,7 @@ def hammer_attack(original, facing, weapon):
     if facing == 'right':
         if original.swing == 1:
             original.swing += 1
-            hamatk = animation(original.x - 1, original.y - 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x - 1, original.y - 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x - 1, original.y - 1):
@@ -684,7 +684,7 @@ def hammer_attack(original, facing, weapon):
             hamatk.drop()
     elif original.swing == 2:
             original.swing -= 1
-            hamatk = animation(original.x - 1, original.y + 1, 'x', libtcod.silver)
+            hamatk = ANIMATION(original.x - 1, original.y + 1, 'x', libtcod.silver)
             hamatk.draw()
             for object in actors:
                 if collision(object, original.x - 1, original.y + 1):
@@ -750,7 +750,7 @@ def pulse_attack(original, facing, weapon):
         object.dist_from_original = [abs(object.x - original.x), abs(object.y - original.y)]
         if object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
             original.closest_target = object 
-        for sx, sy, sd in range(1, weapon.dist):
+        for sx, sy, sd in range(1, weapon.dist + 1):
             if map[(original.x + sx)][original.y + sy].blockpass:
                 break
             if sd > weapon.dist:
@@ -780,7 +780,7 @@ def do_nothing():
 	print 'Unfortunately, this does nothing.'
 
 #item code
-def weapon():
+def WEAPON():
     __init__(self, power, dist, skill, sort, hands, effect)
     self.power = power
     self.dist = dist
@@ -789,22 +789,22 @@ def weapon():
     self.hands = hands
     self.effect = effect
 
-def suit():
+def SUIT():
     __init__(self, power, protection)
     self.power = power
     self.protection = protection
     
-def visor():
+def VISOR():
     __init__(self, effect)
     self.effect = effect
 
-def shield():
+def SHIELD():
     __init__(self, powermax, regentime)
     self.powermax = powermax
     self.powercurr = powermax
     self.regentime = regentime
 
-def mapitem():
+def MAPITEM():
     __init__(self, ident, x, y, char, color)
     self.ident = ident
     self.x = x
@@ -823,7 +823,7 @@ def mapitem():
         self.clear()
         mapitems.remove(self)
         
-def animation():
+def ANIMATION():
     __init__(self, x, y, char, color)
     self.x = x
     self.y = y
@@ -843,16 +843,16 @@ def animation():
         self.clear()
         animations.remove(self)        
 #Melee weapons
-weap_fist = weapon(0, 1, 'None', 'Melee', 1, fist_attack())
+weap_fist = WEAPON(0, 1, 'None', 'Melee', 1, fist_attack())
 
 #Blades
-weap_flexiblade = weapon(15, 1, 'blades', 'Melee', 1, sword_attack())
-weap_dagger = weapon(5, 1, 'blades', 'Melee', 1, dagger_attack())
+weap_flexiblade = WEAPON(15, 1, 'blades', 'Melee', 1, sword_attack())
+weap_dagger = WEAPON(5, 1, 'blades', 'Melee', 1, dagger_attack())
 
 #Whips
 
 #Hammers
-weap_autohammer = weapon(20, 1, 'hammers', 'Melee', 2, hammer_attack())
+weap_autohammer = WEAPON(20, 1, 'hammers', 'Melee', 2, hammer_attack())
 
 #Ranged Weapons
 
@@ -863,16 +863,16 @@ weap_autohammer = weapon(20, 1, 'hammers', 'Melee', 2, hammer_attack())
 #Heavy_Weapons
 
 #Suits
-suit_skillsuit = suit(1.1, 10)
+suit_skillsuit = SUIT(1.1, 10)
 
 #Visors
-visor_basic = visor(do_nothing())
+visor_basic = VISOR(do_nothing())
 
 #Shields
-shield_basic = shield(50, 15)
+shield_basic = SHIELD(50, 15)
 
 #construct player
-player = actor('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, 'V', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
+player = ACTOR('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, 'V', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
 print 'Welcome to Frontier: Scavenger!'
 player.name = raw_input('What is your name?')
@@ -885,7 +885,7 @@ color_dark_wall = libtcod.color(66, 33, 0)
 color_dark_floor = libtcod.color(99, 0, 0)
 
 #Tiles
-def tile():
+def TILE():
     __init__(self, blockpass, blocksight = None)
     self.blockpass = blockpass
     if blocksight is None : blocksight = blockpass
@@ -894,13 +894,12 @@ def tile():
 def make_map():
     global map
     
-    #Fill with passable tiles
-    map = [[tile (False)
+    #Fill with unpassable tiles
+    map = [[TILE (True)
         for y in range(map_HEIGHT)]
             for x in range(map_WIDTH)]
     #adjust individual tiles
     map[30][22].blockpass= True
-    map[30][22].blocksight = True
 
 def handle_keys ():
     
@@ -916,12 +915,16 @@ def handle_keys ():
 #movement keys
     if libtcod.console_is_key_pressed (libtcod.KEY_CHAR(w)):
         player.move(0,-1)
+        fov_recompute = True
     elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(s)):
         player.move(0,1)
+        fov_recompute = True
     elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(a)):
         player.move(-1,0)
+        fov_recompute = True
     elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(d)):
         player.move(1,0)
+        fov_recompute = True
 
 #melee attack(player)
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(m)):
@@ -960,11 +963,12 @@ def render_all():
 libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 
 # Incoming main loop 
-pbag = actor('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
+pbag = ACTOR('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
 actors = list(player, pbag)
 mapitems = list ()
 animations = list ()
+fov_recompute = True
 while not libtcod.is_window_closed():
     framecount += 1
     render_all()
