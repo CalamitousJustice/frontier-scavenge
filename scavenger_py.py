@@ -41,7 +41,7 @@ class ACTOR:
         self.movelock = False
         self.sneak = False
         self.swing = 1
-        
+
         #skills
         self.mobility = mobility
         self.blades = blades
@@ -781,7 +781,8 @@ def do_nothing():
 
 #item code
 def WEAPON():
-    __init__(self, power, dist, skill, sort, hands, effect)
+    __init__(self, name, power, dist, skill, sort, hands, effect)
+    self.name = name
     self.power = power
     self.dist = dist
     self.skill = skill
@@ -790,16 +791,19 @@ def WEAPON():
     self.effect = effect
 
 def SUIT():
-    __init__(self, power, protection)
+    __init__(self, name, power, protection)
+    self.name = name
     self.power = power
     self.protection = protection
     
 def VISOR():
-    __init__(self, effect)
+    __init__(self, name, effect)
+    self.name = name
     self.effect = effect
 
 def SHIELD():
-    __init__(self, powermax, regentime)
+    __init__(self, name, powermax, regentime)
+    self.name = name
     self.powermax = powermax
     self.powercurr = powermax
     self.regentime = regentime
@@ -822,6 +826,28 @@ def MAPITEM():
     def drop(self):
         self.clear()
         mapitems.remove(self)
+
+def EVENT():
+    __init__(self, name, use, x, y, char, color)
+    self.name = name
+    self.x = x
+    self.y = y
+    self.char = char
+    self.color = color
+    def use (self):
+        #Triggers global function corresponding to certain events, defined below
+        do_nothing()
+    def draw (self):
+        #draws character in color to con
+        libtcod.console_set_default_foreground(con, self.color)
+        libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
+        events.append(self)
+    def clear (self):
+        #Clears character
+        libtcod.console_put_char(con, self.x, self.y, ' ', libtcod.BKGND_NONE)
+    def drop(self):
+        self.clear()
+        events.remove(self)        
         
 def ANIMATION():
     __init__(self, x, y, char, color)
@@ -829,6 +855,9 @@ def ANIMATION():
     self.y = y
     self.char = char
     self.color = color
+    def move(self, dx, dy):    
+        self.x += dx
+        self.y += dy
     def draw (self):
         #draws character in color to con
         libtcod.console_set_default_foreground(con, self.color)
@@ -968,6 +997,7 @@ pbag = ACTOR('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yell
 actors = list(player, pbag)
 mapitems = list ()
 animations = list ()
+events = list ()
 fov_recompute = True
 while not libtcod.is_window_closed():
     framecount += 1

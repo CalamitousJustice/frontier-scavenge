@@ -1,3 +1,137 @@
+#actor.drop(), line 94
+        def drop(self):
+            self.clear()
+            if not null in self.drop:
+                selfdrop = MAPITEM(self.drop, self.x, self.y, '?', libtcod.purple)
+            actors.remove(self)
+            
+#actor.bark(), line 103
+        def bark(self):
+            #for each self.race, check list of pre-written barks, print out one at random
+
+
+
+#use, handle_keys, line 949
+
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(u)):
+        if player.face == 'up':
+            for object in actors:
+                if collison(object, player.x, player.y - 1):
+                    object.bark()
+                    break
+            for object in mapitems:
+                if collison(object, player.x, player.y - 1):
+                    item-menu = True
+                    for item-menu == True:
+                        lootlist = list()
+                        for object in mapitems:
+                            lootlist.append(object)
+                        for x < lootlist.items() in lootlist:
+                            print str(x) + ". " + str(lootlist[x].name)
+                        lootchoice = raw_input("Take (#), (A)ll, or (N)one?")
+                        if not lootchoice == int or not lootchoice.upper() == 'A' or not lootchoice.upper() == 'N':
+                                print "Invalid option!"
+                            if lootchoice.upper() == 'A':
+                            for object in lootlist:
+                                player.drops.append(object)
+                                item-menu = False
+                            if lootchoice.upper() == 'N':
+                                item-menu = False
+                            if lootchoice == int:
+                                player.drops.append(lootlist[lootchoice])
+                                lootlist.remove([lootchoice])
+            for object in events:
+                if collison(object, player.x, player.y - 1):
+                    object.use()
+        if player.face == 'down':
+            for object in actors:
+                if collison(object, player.x, player.y + 1):
+                    object.bark()
+                    break
+            for object in mapitems:
+                if collison(object, player.x, player.y + 1):
+                    item-menu = True
+                    for item-menu == True:
+                        lootlist = list()
+                        for object in mapitems:
+                            lootlist.append(object)
+                        for x < lootlist.items() in lootlist:
+                            print str(x) + ". " + str(lootlist[x].name)
+                        lootchoice = raw_input("Take (#), (A)ll, or (N)one?")
+                        if not lootchoice == int or not lootchoice.upper() == 'A' or not lootchoice.upper() == 'N':
+                                print "Invalid option!"
+                            if lootchoice.upper() == 'A':
+                            for object in lootlist:
+                                player.drops.append(object)
+                                item-menu = False
+                            if lootchoice.upper() == 'N':
+                                item-menu = False
+                            if lootchoice == int:
+                                player.drops.append(lootlist[lootchoice])
+                                lootlist.remove([lootchoice])
+            for object in events:
+                if collison(object, player.x, player.y + 1):
+                    object.use()
+                    
+        if player.face == 'left':
+            for object in actors:
+                if collison(object, player.x - 1, player.y):
+                    object.bark()
+                    break
+            for object in mapitems:
+                if collison(object, player.x - 1, player.y):
+                    item-menu = True
+                    for item-menu == True:
+                        lootlist = list()
+                        for object in mapitems:
+                            lootlist.append(object)
+                        for x < lootlist.items() in lootlist:
+                            print str(x) + ". " + str(lootlist[x].name)
+                        lootchoice = raw_input("Take (#), (A)ll, or (N)one?")
+                        if not lootchoice == int or not lootchoice.upper() == 'A' or not lootchoice.upper() == 'N':
+                                print "Invalid option!"
+                            if lootchoice.upper() == 'A':
+                            for object in lootlist:
+                                player.drops.append(object)
+                                item-menu = False
+                            if lootchoice.upper() == 'N':
+                                item-menu = False
+                            if lootchoice == int:
+                                player.drops.append(lootlist[lootchoice])
+                                lootlist.remove([lootchoice])
+            for object in events:
+                if collison(object, player.x - 1, player.y):
+                    object.use()                    
+                    
+        if player.face == 'right':
+            for object in actors:
+                if collison(object, player.x + 1, player.y):
+                    object.bark()
+                    break
+            for object in mapitems:
+                if collison(object, player.x + 1, player.y):
+                    item-menu = True
+                    for item-menu == True:
+                        lootlist = list()
+                        for object in mapitems:
+                            lootlist.append(object)
+                        for x < lootlist.items() in lootlist:
+                            print str(x) + ". " + str(lootlist[x].name)
+                        lootchoice = raw_input("Take (#), (A)ll, or (N)one?")
+                        if not lootchoice == int or not lootchoice.upper() == 'A' or not lootchoice.upper() == 'N':
+                                print "Invalid option!"
+                            if lootchoice.upper() == 'A':
+                            for object in lootlist:
+                                player.drops.append(object)
+                                item-menu = False
+                            if lootchoice.upper() == 'N':
+                                item-menu = False
+                            if lootchoice == int:
+                                player.drops.append(lootlist[lootchoice])
+                                lootlist.remove([lootchoice])
+            for object in events:
+                if collison(object, player.x + 1, player.y):
+                    object.use()
 #Line atks, line 774
 
 def line_attack(original, facing, weapon):
