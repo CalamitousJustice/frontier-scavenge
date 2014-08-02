@@ -1,4 +1,5 @@
 import sys
+import math
 from sys import path as syspath
 syspath.append('.//libtcod-1.6.0')
 import libtcodpy as libtcod

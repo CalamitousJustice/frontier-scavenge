@@ -8,6 +8,11 @@
 #actor.bark(), line 103
         def bark(self):
             #for each self.race, check list of pre-written barks, print out one at random
+            if self.allegiance == 'Survivors'   
+                barklist = open('.//barks/survivors.txt')
+                lines=barklist.readlines()
+                ranbark = math.random(1, barklist.length())
+                print str(self.name) + ': ' + str(lines[ranbark])
 
 
 
