@@ -508,7 +508,430 @@ def beam_attack(original, facing, weapon):
                 for object in actors:
                     if collision(object, original.x - ly, original.y - ly):
                         damage(object, original, hand)
-                        
+#evolving fist attack - line 125. Level 1 adds a hooking motion to the animation, level 3 adds an extra swing if the first hits and a movement forward, level 5 adds a third hit that can instantly kill.
+def fist_attack(original, facing, weapon):
+    if facing == 'up':
+        if original.swing == 1:
+            swing += 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x - 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x - 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+        if original.swing == 2:
+            swing -= 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x + 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x + 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+            if combo == True:
+                original.move(0,-1)
+                fist_attack(original, facing, weapon)
+            if combo2 == True:
+                original.move(0,-1)
+                fistatk = ANIMATION(original.x - 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x + 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(0,-1)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                combo2 = False
+    if facing == 'down':
+        if original.swing == 1:
+            swing += 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x + 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x + 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+        if original.swing == 2:
+            swing -= 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x - 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x - 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+            if combo == True:
+                original.move(0,1)
+                fist_attack(original, facing, weapon)
+            if combo2 == True:
+                original.move(0,1)
+                fistatk = ANIMATION(original.x + 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x - 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(0,1)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                combo2 = False
+    if facing == 'left':
+        if original.swing == 1:
+            swing += 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x - 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x - 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+        if original.swing == 2:
+            swing -= 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x - 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x - 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+            if combo == True:
+                original.move(-1,0)
+                fist_attack(original, facing, weapon)
+            if combo2 == True:
+                original.move(-1,0)
+                fistatk = ANIMATION(original.x - 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x - 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x - 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x - 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(-1,0)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                combo2 = False
+    if facing == 'right':
+        if original.swing == 1:
+            swing += 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x + 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x + 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+        if original.swing == 2:
+            swing -= 1
+            if original.unarmed >= 1:
+                fistatk = ANIMATION(original.x, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            combo = True
+                fistatk = ANIMATION(original.x + 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False
+                                if unarmed >= 5:
+                                    combo2 = True
+                            else combo = True
+            if original.unarmed >= 0:
+                fistatk = ANIMATION(original.x + 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        fistatk.clear()
+                        if unarmed >= 3:
+                            if combo == True:
+                                combo = False     
+                            else combo = True
+            if combo == True:
+                original.move(1,0)
+                fist_attack(original, facing, weapon)
+            if combo2 == True:
+                original.move(1,0)
+                fistatk = ANIMATION(original.x + 1, original.y - 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y - 1):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x + 1, original.y, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                fistatk = ANIMATION(original.x + 1, original.y + 1, '.', libtcod.silver)
+                fistatk.draw()
+                for object in actors:
+                    if collision(object, original.x + 1, original.y + 1):
+                        damage(object, original, weapon)
+                        object.move(1,0)
+                        object.status = 'Deathblow'
+                        fistatk.clear()
+                combo2 = False
+    original.fire = False
+
 #map code, line 893
 ROOM_MAX_SIZE = 10
 ROOM_MIN_SIZE = 6
@@ -538,28 +961,54 @@ class RECT:
     def intersect(self, other):
         #returns true if this rectangle intersects with another one
         return (self.x1 <= other.x2 and self.x2 >= other.x1 and self.y1 <= other.y2 and self.y2 >= other.y1)
-        
+class CIRCLE:
+    #a circle on the map. used to characterize a room.
+    def __init__(self, x, y, r):
+        self.x1 = x
+        self.y1 = y
+        self.x2 = x + r
+        self.y2 = y + r
+    def center(self):
+        center_x = (self.x1 + self.x2) / 2
+        center_y = (self.y1 + self.y2) / 2
+        return (center_x, center_y)
+    def intersect(self, other):
+        #returns true if this rectangle intersects with another one
+        return (self.x1 <= other.x2 and self.x2 >= other.x1 and self.y1 <= other.y2 and self.y2 >= other.y1)
+
+      
+      
 def create_room(room):
     global map
     #go through the tiles in the rectangle and make them passable
     for x in range(room.x1 + 1, room.x2):
         for y in range(room.y1 + 1, room.y2):
             map[x][y].blocked = False
-            map[x][y].block_sight = False
+            map[x][y].block_sight = False         
+def create_circle(room):
+    global map
+    #go through the tiles in the rectangle and make them passable
+    for x in range(room.center_x - r + 1, room.center_x + r):
+        for y in range(room.center_y - r + 1, room.center_y + r):
+            map[x][y].blocked = False
+            map[x][y].block_sight = False         
 
 def create_h_tunnel(x1, x2, y):
     global map
+    #Horizontal tunnel - 2 tiles wide
     for x in range(min(x1, x2), max(x1, x2) + 1):
         map[x][y].blocked = False
         map[x][y].block_sight = False
-        
+        map[x][y + 1].blocked = False
+        map[x][y + 1].block_sight = False        
 def create_v_tunnel(y1, y2, x):
     global map
-    #vertical tunnel
+    #vertical tunnel - 2 tiles wide
     for y in range(min(y1, y2), max(y1, y2) + 1):
         map[x][y].blocked = False
         map[x][y].block_sight = False
-
+        map[x + 1][y].blocked = False
+        map[x + 1][y].block_sight = False
 #Make_map, line 894
 def make_map():
     global map
@@ -631,14 +1080,14 @@ def make_map():
             num_rooms += 1
 
 # Field of View
-FOV_ALGO = 0  #default FOV algorithm
+FOV_ALGO = FOV_DIAMOND  #default FOV algorithm
 FOV_LIGHT_WALLS = True
 TORCH_RADIUS = 10
 
 #render_all , line 948
 def render_all():
     global fov_map, color_dark_wall, color_light_wall
-    global color_dark_ground, color_light_ground
+    global color_dark_floor, color_light_floor
     global fov_recompute
     
     if fov_recompute:
