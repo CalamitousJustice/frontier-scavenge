@@ -16,7 +16,7 @@
 
 #Aimed atk, combat functions, line 104
 def aimed_atk(target, original, weapon):
-    if weapon.effect.str() == 'pulse_atk()':
+    if weapon.effect.str() == 'pulse_attack()':
         for sx, sy, sd in range(1, weapon.dist + 1):
             if map[(original.x + sx)][original.y + sy].blockpass:
                 break
@@ -37,10 +37,70 @@ def aimed_atk(target, original, weapon):
                 break                                     
             libtcod.console_put_char(con, original.x + sx, original.y + sy, ' ', libtcod.BKGND_NONE)
             sd + 1
+    if weapon.effect.str() == 'line_attack()':            
+        lineatks = list()
+        for sx, sy, sd in range(1, weapon.dist + 1):
+            if map[(original.x + sx)][original.y + sy].blockpass:
+                for object in lineatks:
+                    lineatks.remove(object)
+                    object.drop()
+                break
+            if sd > weapon.dist:
+                for object in lineatks:
+                    lineatks.remove(object)
+                    object.drop()
+                break
+            if target.x < original.x:
+                sx -= 1
+            if target.y < original.y:
+                sy -= 1
+            if target.x > original.x:
+                sx += 1
+            if target.y > original.y:
+                sy += 1                         
+            lineatk = ANIMATION(original.x + sx, original.y + sy, '*', libtcod.pink)
+            lineatk.draw()
+            lineatks.append(lineatk)
+            for object in actors:
+                if collision(object, original.x, original.y - ly):
+                    damage(object, original, weapon)
+            sd + 1
+    if weapon.effect.str() == 'beam_attack()':            
+        beamatks = list()
+        for sx, sy, sd in range(1, weapon.dist + 1):
+            if map[(original.x + sx)][original.y + sy].blockpass:
+                for object in beamatks:
+                    beamatks.remove(object)
+                    object.drop()
+                break
+            if sd > weapon.dist:
+                for object in beamatks:
+                    beamatks.remove(object)
+                    object.drop()
+                break
+            if target.x < original.x:
+                sx -= 1
+            if target.y < original.y:
+                sy -= 1
+            if target.x > original.x:
+                sx += 1
+            if target.y > original.y:
+                sy += 1                         
+            beamatk = ANIMATION(original.x + sx, original.y + sy, ' ', libtcod.yellow)
+            beamatk.draw()
+            beamatks.append(beamatk)
+            for object in actors:
+                if collision(object, original.x, original.y - ly):
+                    damage(object, original, weapon)
+            sd + 1
 
-    
-#use & aim, handle_keys, line 949
-    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(a)):
+            
+#use, aim, break_aim, handle_keys, line 949
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(x)):
+       player.currTarget = 'None'
+       player.aimWeap = 'None'
+        
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(f)):
         if player.currTarget = 'None':
             targets = list()
             for object in actors:
@@ -264,7 +324,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x, original.y - ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #down
     if original.closest_target.x == original.x and original.closest_target.y > original.y:
         for ly in range(1, weapon.dist)
@@ -284,7 +344,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x, original.y + ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #left
     if original.closest_target.x < original.x and original.closest_target.y == original.y:
         for ly in range(1, weapon.dist)
@@ -304,7 +364,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x - ly, original.y):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #right
     if original.closest_target.x > original.x and original.closest_target.y == original.y:
         for ly in range(1, weapon.dist)
@@ -324,7 +384,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x + ly, original.y):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #diagonal right-down
     if original.closest_target.x > original.x and original.closest_target.y > original.y:
         for ly in range(1, weapon.dist)
@@ -344,7 +404,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x + ly, original.y + ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #Diagonal right-up                    
     if original.closest_target.x > original.x and original.closest_target.y < original.y:
         for ly in range(1, weapon.dist)
@@ -364,7 +424,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x + ly, original.y - ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #diagonal left-down
     if original.closest_target.x < original.x and original.closest_target.y > original.y:
         for ly in range(1, weapon.dist)
@@ -384,7 +444,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x - ly, original.y + ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #Diagonal left-up                    
     if original.closest_target.x < original.x and original.closest_target.y < original.y:
         for ly in range(1, weapon.dist)
@@ -403,7 +463,7 @@ def line_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x - ly, original.y - ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
 
 #Beam atks
 
@@ -450,7 +510,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(beamatk)
                 for object in actors:
                     if collision(object, original.x, original.y - ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #down
     if original.closest_target.x == original.x and original.closest_target.y > original.y:
         for ly in range(1, weapon.dist)
@@ -470,7 +530,7 @@ def beam_attack(original, facing, weapon):
                 beamatk.draw()
                 for object in actors:
                     if collision(object, original.x, original.y + ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #left
     if original.closest_target.x < original.x and original.closest_target.y == original.y:
         for ly in range(1, weapon.dist)
@@ -490,7 +550,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(beamatk)
                 for object in actors:
                     if collision(object, original.x - ly, original.y):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #right
     if original.closest_target.x > original.x and original.closest_target.y == original.y:
         for ly in range(1, weapon.dist)
@@ -510,7 +570,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(beamatk)
                 for object in actors:
                     if collision(object, original.x + ly, original.y):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #diagonal right-down
     if original.closest_target.x > original.x and original.closest_target.y > original.y:
         for ly in range(1, weapon.dist)
@@ -530,7 +590,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(beamatk)
                 for object in actors:
                     if collision(object, original.x + ly, original.y + ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #Diagonal right-up                    
     if original.closest_target.x > original.x and original.closest_target.y < original.y:
         for ly in range(1, weapon.dist)
@@ -550,7 +610,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(beamatk)
                 for object in actors:
                     if collision(object, original.x + ly, original.y - ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #diagonal left-down
     if original.closest_target.x < original.x and original.closest_target.y > original.y:
         for ly in range(1, weapon.dist)
@@ -569,7 +629,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(lineatk)
                 for object in actors:
                     if collision(object, original.x - ly, original.y + ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
     #Diagonal left-up                    
     if original.closest_target.x < original.x and original.closest_target.y < original.y:
         for ly in range(1, weapon.dist)
@@ -589,7 +649,7 @@ def beam_attack(original, facing, weapon):
                 lineatks.append(beamatk)
                 for object in actors:
                     if collision(object, original.x - ly, original.y - ly):
-                        damage(object, original, hand)
+                        damage(object, original, weapon)
 #evolving fist attack - line 125. Level 1 adds a hooking motion to the animation, level 3 adds an extra swing if the first hits and a movement forward, level 5 adds a third hit that can instantly kill.
 def fist_attack(original, facing, weapon):
     if facing == 'up':
