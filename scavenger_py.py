@@ -15,7 +15,7 @@ libtcod.sys_set_fps(LIMIT_FPS)
 
 class ACTOR:
 
-    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
+    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, unarmed, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
         self.name = name
         self.gender = gender
         self.species = species
@@ -42,8 +42,10 @@ class ACTOR:
         self.movelock = False
         self.sneak = False
         self.swing = 1
+        self.currTarget = 'None'
 
         #skills
+        self.unarmed = unarmed
         self.mobility = mobility
         self.blades = blades
         self.hammers = hammers
@@ -100,8 +102,8 @@ class ACTOR:
             
 #Combat Functions
 def damage(target, original, hand):
-    if original.hand.skill == 'None' and original.hand.sort == 'Melee':    
-        original_damage = (original.STR * original.suit.power + original.hand.power)
+    if original.hand.skill == 'unarmed' and original.hand.sort == 'Melee':    
+        original_damage = (original.STR * original.suit.power * (original.unarmed * .05 + 1) + original.hand.power)
         target_resist = (target.STR * target.suit.power + target.suit.protection)
         damage_dealt = original_damage - target_resist
         if damage_dealt < 1 :
@@ -873,7 +875,7 @@ def ANIMATION():
         self.clear()
         animations.remove(self)        
 #Melee weapons
-weap_fist = WEAPON(0, 1, 'None', 'Melee', 1, fist_attack())
+weap_fist = WEAPON(0, 1, 'unarmed', 'Melee', 1, fist_attack())
 
 #Blades
 weap_flexiblade = WEAPON(15, 1, 'blades', 'Melee', 1, sword_attack())
@@ -902,7 +904,7 @@ visor_basic = VISOR(do_nothing())
 shield_basic = SHIELD(50, 15)
 
 #construct player
-player = ACTOR('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, 'V', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
+player = ACTOR('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, 'V', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
 print 'Welcome to Frontier: Scavenger!'
 player.name = raw_input('What is your name?')
@@ -993,7 +995,7 @@ def render_all():
 libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 
 # Incoming main loop 
-pbag = ACTOR('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
+pbag = ACTOR('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
 actors = list(player, pbag)
 mapitems = list ()

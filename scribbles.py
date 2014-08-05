@@ -16,7 +16,8 @@
 
 
 
-#use, handle_keys, line 949
+#use & aim, handle_keys, line 949
+
 
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(u)):
         if player.face == 'up':
