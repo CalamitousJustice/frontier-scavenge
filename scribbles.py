@@ -14,10 +14,91 @@
                 ranbark = math.random(1, barklist.length())
                 print str(self.name) + ': ' + str(lines[ranbark])
 
+#Aimed atk, combat functions, line 104
+def aimed_atk(target, original, weapon):
+    if weapon.effect.str() == 'pulse_atk()':
+        for sx, sy, sd in range(1, weapon.dist + 1):
+            if map[(original.x + sx)][original.y + sy].blockpass:
+                break
+            if sd > weapon.dist:
+                break
+            if target.x < original.x:
+                sx -= 1
+            if target.y < original.y:
+                sy -= 1
+            if target.x > original.x:
+                sx += 1
+            if target.y > original.y:
+                sy += 1                         
+            libtcod.console_put_char(con, player.x + sx, player.y + sy, '*', libtcod.pink, libtcod.BKGND_NONE)
+            if collision(original.x + sx, original.y + sy):
+                damage(target, original, weapon)
+                libtcod.console_put_char(con, original.x + sx, original.y + sy, ' ', libtcod.BKGND_NONE)  
+                break                                     
+            libtcod.console_put_char(con, original.x + sx, original.y + sy, ' ', libtcod.BKGND_NONE)
+            sd + 1
 
-
+    
 #use & aim, handle_keys, line 949
-
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(a)):
+        if player.currTarget = 'None':
+            targets = list()
+            for object in actors:
+                object.dist_from_original = [abs(object.x - original.x), abs(object.y - original.y)]
+                target_diff = [weapon.dist, weapon.dist]
+                if object.allegiance != player.allegiance and not object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
+                    targets.append(object)
+            targetmenu = True
+#Choose Your Target
+            for targetmenu = True:
+                if targets.length() > 0:
+                     for x, object in targets:
+                         print str(x) + ". " + object.name
+                         x + 1
+                     choose_target = raw_input('Choose a Target(#) or (N)one')
+                     if choose_target == int:
+                         if choose_target > targets.length or choose_target < 1:
+                             print 'Invalid target!'
+                         else for x in range(1, targets.length()):
+                             if choose_target = x:
+                                 player.currTarget = targets[x]
+                                 targetmenu = False
+                     elif choose_target.upr() == 'N':
+                         targetmenu = False
+                     elif choose_target.upr() != 'N':
+                         print "Invalid target!"
+        if player.currTarget != 'None':
+            if player.aimWeap == 'None':
+                weapons = list(player.hnd1, player.hnd2)
+                for object in weapons:
+                    print str(x) + '. ' + str(weapons[x].name)
+                weaponmenu = True
+                for weaponmenu = True:
+                    choose_weapon = raw_input('Choose a weapon to aim.')
+                    if choose_weapon == 1:
+                        player.aimWeap = player.hnd1
+                        weaponmenu = False
+                    elif choose_weapon == 2:
+                        player.aimWeap = player.hnd2
+                        weaponmenu = False
+                    else print 'Invalid weapon!'
+            if player.aimWeap != 'None':
+                if player.currTarget.x < player.x:
+                    player.face = 'left'
+                    player.char = '<'
+                if player.currTarget.x > player.x:
+                    player.face = 'right'
+                    player.char = '>'
+                if player.currTarget.y < player.y:
+                    player.face = 'up'
+                    player.char = '^'
+                if player.currTarget.y > player.y:
+                    player.face = 'down'
+                    player.char = 'v'
+                if player.aimWeap.sort == 'Melee' and player.fire == False:
+                    melee_atk (player, player.aimWeap, player.face)
+                elif player.aimWeap.sort == 'Ranged' and player.fire == False:
+                    aimed_atk (player.currTarget, player, player.aimWeap)
 
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(u)):
         if player.face == 'up':

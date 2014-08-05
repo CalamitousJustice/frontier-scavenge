@@ -43,7 +43,8 @@ class ACTOR:
         self.sneak = False
         self.swing = 1
         self.currTarget = 'None'
-
+        self.aimWeap = 'None'
+        
         #skills
         self.unarmed = unarmed
         self.mobility = mobility
@@ -120,7 +121,7 @@ def collision(target, cx, cy):
 #Melee Weapon Functions
 def melee_atk(original, hand, facing):
     if original.fire == False:
-        original.hand.effect(original, original.facing, hand)
+        hand.effect(original, original.facing, hand)
         original.fire = True
 
 def fist_attack(original, facing, weapon):
@@ -961,18 +962,18 @@ def handle_keys ():
 #melee attack(player)
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(m)):
         if player.hnd1.dist == 1 and player.fire == False:
-            melee_atk (player, hnd1, player.face)
+            melee_atk (player, player.hnd1, player.face)
         elif player.hnd2.dist == 1 and player.fire == False:
-            melee_atk (player, hnd2, player.face)
+            melee_atk (player, player.hnd2, player.face)
         elif player.hnd1.dist != 1 and player.hnd2.dist != 1:
-            fist_attack (player, player.face, fist)
+            fist_attack (player, player.face, weap_fist)
             
 #Ranged attack(player)
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(r)):
         if player.hnd1.dist > 1 and player.fire == False:
-            melee_atk (player, hnd1, player.face)
+            melee_atk (player, player.hnd1, player.face)
         elif player.hnd2.dist > 1 and player.fire == False:
-            melee_atk (player, hnd2, player.face)
+            melee_atk (player, player.hnd2, player.face)
         elif player.hnd1.dist == 1 and player.hnd2.dist == 1:
             print 'No ranged weapon equipped!'
  
