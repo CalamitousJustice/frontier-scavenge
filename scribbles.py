@@ -16,6 +16,7 @@
 
 #Aimed atk, combat functions, line 104
 def aimed_atk(target, original, weapon):
+    player.fire = True
     if weapon.effect.str() == 'pulse_attack()':
         for sx, sy, sd in range(1, weapon.dist + 1):
             if map[(original.x + sx)][original.y + sy].blockpass:
@@ -157,8 +158,10 @@ def aimed_atk(target, original, weapon):
                     player.char = 'v'
                 if player.aimWeap.sort == 'Melee' and player.fire == False:
                     melee_atk (player, player.aimWeap, player.face)
+                    player.fire = False
                 elif player.aimWeap.sort == 'Ranged' and player.fire == False:
                     aimed_atk (player.currTarget, player, player.aimWeap)
+                    player.fire = False
 
     if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(u)):
         if player.face == 'up':
