@@ -1286,6 +1286,13 @@ rifles = SKILL('Rifles', 'DMG + 5% per skill level.', 20, takeaim, doubletap, he
 
 heavyw = SKILL('Heavy Weapons', 'DMG + 5% per skill level.', 20, ammosave, discharge, overclock, 'AGI')
 
+thrown = SKILL('Thrown Weapons', 'DMG + 5% per skill level.', 15, longarm, twohand, masterblaster , 'STR')
+
+#Accessory Skills
+mobility = SKILL()
+
+
+
 #Abilities
 def ABILITY():
     __init__(self, name, skill, key, cost, effect, desc)
@@ -1307,13 +1314,16 @@ dualwield = ABILITY('Dual-Wield', blades, 'None', 0, do_nothing(), 'Can attack w
 entangle = ABILITY('Entangle', whips, 'None', 25, do_nothing(), 'Activate to stop an enemy from moving, dealing damage over time while the whip remains attached.')
 headshot = ABILITY('Headshot', rifles, 'None', 0, do_nothing(), '25% chance to instantly kill most enemies.')
 hook = ABILITY('Hook', unarmed, 'None', 0, do_nothing(), 'Extends reach of unarmed attacks.')
-northstarpalm = ABILITY('North Star Palm', unarmed, 'None', 0, do_nothing(), 'Adds a third hit to successful unarmed comboes. This hit can instantly kill most enemies.')
+longarm = ABILITY('Long Arm', thrown, 'None', 0, do_nothing(), 'Increases range of thrown weapons by skill level.')
 maelstrom = ABILITY('Maelstrom', pistols, 'None', 25, do_nothing(), 'Activate to fire at all targets in range until out of ammo.')
+masterblaster = ABILITY('Master Blaster', thrown, 'None', 0, do_nothing(), 'Increases blast radius of grenade-like weapons.')
 mechanicalstrike = ABILITY('Mechanical Strike', hammers, 'None', 0, do_nothing(), 'Successful attacks with hammers inflict an additional hit.')
+northstarpalm = ABILITY('North Star Palm', unarmed, 'None', 0, do_nothing(), 'Adds a third hit to successful unarmed comboes. This hit can instantly kill most enemies.')
 overclock = ABILITY('Overclock', heavyw, 'None', 30, do_nothing(), 'Activate to fire a shot, with the damage multiplied by the number of charges remaining on the current battery.)
 parry = ABILITY('Parry', blades, 'None', 0, do_nothing(), '5% * skill level chance to evade melee attacks.')
 rush = ABILITY('Rush', hammers, 'None', 25, do_nothing(), 'Activate to damage and push all enemies forward up to 3 spaces.')
 speedreload = ABILITY('Speed Reload', pistols, 'None', 0, do_nothing(), 'Automatically reloads when ammo reaches 0.')
 swing = ABILITY('Swing', whips, 'None', 10, do_nothing(), 'Swings whip in chosen direction, if collides with wall or object, move actor to that point. Range = skill level.')
-takeaim = ABILITY('Take aim', rifles, 'None', 10, do_nothing(), 'Activate to stop movement and take aim. Damage increases depending on time spent standing still.')
+takeaim = ABILITY('Take Aim', rifles, 'None', 10, do_nothing(), 'Activate to stop movement and take aim. Damage increases depending on time spent standing still.')
+twohand = ABILITY('Two Hand Throw', thrown, 'None', 0, do_nothing(), 'Throws an additional weapon if availible.')
 whirl = ABILITY('Whirl', blades, 'None', 25, do_nothing(), 'Activate to hit all adjacent enemies and move forward up to 3 spaces.')
