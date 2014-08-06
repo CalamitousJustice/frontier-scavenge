@@ -1296,7 +1296,7 @@ def ABILITY():
     self.effect() = effect
     self.desc = desc
 #Weapon abilities
-ammosave = ABILITY('Ammo Save', heavy, 'None', 0, do_nothing(), 'Adds 2 charges per battery per skill level.')
+ammosave = ABILITY('Ammo Save', heavyw, 'None', 0, do_nothing(), 'Adds 2 charges per battery per skill level.')
 combo = ABILITY('Combo', unarmed, 'None', 0, do_nothing(), 'Adds additional hit upon successful unarmed attack.')
 deathblow = ABILITY('Deathblow', hammers, 'None', 25, do_nothing(), 'Activate to make a hammer swing that instantly kills most enemies.' )
 disarm = ABILITY('Disarm', whips, 'None', 15, do_nothing(), 'Activate to remove equipped weapon of any actor hit.')
