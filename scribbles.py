@@ -1259,4 +1259,61 @@ def render_all():
                         libtcod.console_set_char_background(con, x, y, color_light_ground, libtcod.BKGND_SET )
                     #since it's visible, explore it
                     map[x][y].explored = True
- 
+
+#Skills and Skill Menu, find line
+
+def SKILL():
+    __init__(self, name, description, xp_cost, ability1, ability2, ability3, keystat)
+    self.name = name
+    self.description = description
+    self.xp_cost = xp_cost
+    self.ability1 = ability1
+    self.ability2 = ability2
+    self.ability3 = ability3
+    self.keystat = keystat
+#Weapon skills    
+unarmed = SKILL('Unarmed', 'Power of Fist + 5 * skill level. DMG + 5% per skill level.', 20, hook, combo, northstarpalm, 'STR')
+
+blades = SKILL('Blades', 'DMG + 5% per skill level.', 20, parry, dualwield, whirl, 'STR')
+
+hammers = SKILL('Hammers', 'DMG + 5% per skill level.', 20, rush, mechanicalstrike, deathblow, 'STR')
+
+whips = SKILL('Whips', 'DMG + 5% per skill level.', 20, disarm, swing, entangle, 'STR')
+
+pistols = SKILL('Pistols', 'DMG + 5% per skill level.', 20, speedreload, dualfire, maelstrom, 'AGI')
+
+rifles = SKILL('Rifles', 'DMG + 5% per skill level.', 20, takeaim, doubletap, headshot, 'AGI')
+
+heavyw = SKILL('Heavy Weapons', 'DMG + 5% per skill level.', 20, ammosave, discharge, overclock, 'AGI')
+
+#Abilities
+def ABILITY():
+    __init__(self, name, skill, key, cost, effect, desc)
+    self.name = name
+    self.skill = skill
+    self.key = key
+    self.cost = cost
+    self.effect() = effect
+    self.desc = desc
+#Weapon abilities
+ammosave = ABILITY('Ammo Save', heavy, 'None', 0, do_nothing(), 'Adds 2 charges per battery per skill level.')
+combo = ABILITY('Combo', unarmed, 'None', 0, do_nothing(), 'Adds additional hit upon successful unarmed attack.')
+deathblow = ABILITY('Deathblow', hammers, 'None', 25, do_nothing(), 'Activate to make a hammer swing that instantly kills most enemies.' )
+disarm = ABILITY('Disarm', whips, 'None', 15, do_nothing(), 'Activate to remove equipped weapon of any actor hit.')
+discharge = ABILITY('Discharge', heavyw, 'None', 25, do_nothing(), 'Activate to hit all adjacent enemies with heat discharge.')
+doubletap = ABILITY('Double Tap', rifles, 'None', 0, do_nothing(), 'Successful hit with any rifle weapon triggers a second shot.')
+dualfire = ABILITY('Dual-Fire', pistols, 'None', 0, do_nothing(), 'Adds additional shot with two pistols equipped.')
+dualwield = ABILITY('Dual-Wield', blades, 'None', 0, do_nothing(), 'Can attack with two blades per swing.')
+entangle = ABILITY('Entangle', whips, 'None', 25, do_nothing(), 'Activate to stop an enemy from moving, dealing damage over time while the whip remains attached.')
+headshot = ABILITY('Headshot', rifles, 'None', 0, do_nothing(), '25% chance to instantly kill most enemies.')
+hook = ABILITY('Hook', unarmed, 'None', 0, do_nothing(), 'Extends reach of unarmed attacks.')
+northstarpalm = ABILITY('North Star Palm', unarmed, 'None', 0, do_nothing(), 'Adds a third hit to successful unarmed comboes. This hit can instantly kill most enemies.')
+maelstrom = ABILITY('Maelstrom', pistols, 'None', 25, do_nothing(), 'Activate to fire at all targets in range until out of ammo.')
+mechanicalstrike = ABILITY('Mechanical Strike', hammers, 'None', 0, do_nothing(), 'Successful attacks with hammers inflict an additional hit.')
+overclock = ABILITY('Overclock', heavyw, 'None', 30, do_nothing(), 'Activate to fire a shot, with the damage multiplied by the number of charges remaining on the current battery.)
+parry = ABILITY('Parry', blades, 'None', 0, do_nothing(), '5% * skill level chance to evade melee attacks.')
+rush = ABILITY('Rush', hammers, 'None', 25, do_nothing(), 'Activate to damage and push all enemies forward up to 3 spaces.')
+speedreload = ABILITY('Speed Reload', pistols, 'None', 0, do_nothing(), 'Automatically reloads when ammo reaches 0.')
+swing = ABILITY('Swing', whips, 'None', 10, do_nothing(), 'Swings whip in chosen direction, if collides with wall or object, move actor to that point. Range = skill level.')
+takeaim = ABILITY('Take aim', rifles, 'None', 10, do_nothing(), 'Activate to stop movement and take aim. Damage increases depending on time spent standing still.')
+whirl = ABILITY('Whirl', blades, 'None', 25, do_nothing(), 'Activate to hit all adjacent enemies and move forward up to 3 spaces.')
