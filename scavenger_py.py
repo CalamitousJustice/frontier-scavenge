@@ -1019,7 +1019,7 @@ libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 
 game_state = 'playing'
 player_action = None
-actors = list(player, pbag)
+actors = list(player)
 mapitems = list ()
 animations = list ()
 events = list ()
