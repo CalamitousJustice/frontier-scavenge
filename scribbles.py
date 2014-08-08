@@ -97,11 +97,11 @@ def aimed_atk(target, original, weapon):
 
             
 #use, aim, break_aim, handle_keys, line 949
-    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(x)):
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(x)) and game_state == 'playing':
        player.currTarget = 'None'
        player.aimWeap = 'None'
         
-    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(f)):
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(f)) and game_state == 'playing':
         if player.currTarget = 'None':
             targets = list()
             for object in actors:
@@ -163,7 +163,7 @@ def aimed_atk(target, original, weapon):
                     aimed_atk (player.currTarget, player, player.aimWeap)
                     player.fire = False
 
-    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(u)):
+    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(u)) and game_state == 'playing':
         if player.face == 'up':
             for object in actors:
                 if collison(object, player.x, player.y - 1):
@@ -1078,6 +1078,7 @@ def fist_attack(original, facing, weapon):
     original.fire = False
 
 #map code, line 893
+
 ROOM_MAX_SIZE = 10
 ROOM_MIN_SIZE = 6
 MAX_ROOMS = 30
@@ -1201,6 +1202,7 @@ def make_map():
             #"paint" it to the map's tiles
             create_room(new_room)
             #center coordinates of new room, will be useful later
+            
             (new_x, new_y) = new_room.center()
             if num_rooms == 0:
                 #this is the first room, where the player starts at
@@ -1220,6 +1222,8 @@ def make_map():
                     #first move vertically, then horizontally
                     create_v_tunnel(prev_y, new_y, prev_x)
                     create_h_tunnel(prev_x, new_x, new_y)
+            #add some contents to this room, such as monsters
+            place_objects(new_room)
             #finally, append the new room to the list
             rooms.append(new_room)
             num_rooms += 1
@@ -1259,6 +1263,23 @@ def render_all():
                         libtcod.console_set_char_background(con, x, y, color_light_ground, libtcod.BKGND_SET )
                     #since it's visible, explore it
                     map[x][y].explored = True
+
+#Monster spawning
+def place_objects(room):
+    #choose random number of monsters
+    num_monsters = libtcod.random_get_int(0, 0, MAX_ROOM_MONSTERS)
+
+    for i in range(num_monsters):
+        #choose random spot for this monster
+        x = libtcod.random_get_int(0, room.x1, room.x2)
+        y = libtcod.random_get_int(0, room.y1, room.y2)
+        if not is_blocked(x, y):
+            if libtcod.random_get_int(0, 0, 100) < 80:  #80% chance
+                 #Monster spawn
+            else:
+            
+
+        actors.append(monster)
 
 #Skills and Skill Menu, find line
 

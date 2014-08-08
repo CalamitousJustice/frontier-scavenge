@@ -7,6 +7,7 @@ import libtcodpy as libtcod
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50
 LIMIT_FPS = 20
+MAX_ROOM_MONSTERS = 3
 libtcod.console_set_custom_font ('terminal8x8_gs_tc.png', libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
 libtcod.init_root(SCREEN_WIDTH, SCREEN_HEIGHT, 'Frontier:Scavenger', False)
 con = libtcod.console_new(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -44,6 +45,7 @@ class ACTOR:
         self.swing = 1
         self.currTarget = 'None'
         self.aimWeap = 'None'
+        self.blocks = 'True'
         
         #skills
         self.unarmed = unarmed
@@ -71,7 +73,7 @@ class ACTOR:
 
     #functions
         def move(self, dx, dy):
-            if not map[self.x + dx][self.x + dx].blockpass and self.movelock == False:
+            if not is_blocked(self.x + dx, self.y + dy) and self.movelock == False:
                 self.x += dx
                 self.y += dy
                 if dx < 0:
@@ -783,6 +785,21 @@ def pulse_attack(original, facing, weapon):
 def do_nothing():
 	print 'Unfortunately, this does nothing.'
 
+#move collision
+def is_blocked(x, y):
+    #first test the map tile
+    if map[x][y].blockpass:
+        return True
+
+    #now check for any blocking objects
+    for object in actors:
+        if object.blocks and object.x == x and object.y == y:
+            return True
+    for object in events:
+        if object.blocks and object.x == x and object.y == y:
+            return True
+          
+    return False
 #item code
 def WEAPON():
     __init__(self, name, power, dist, skill, sort, hands, effect)
@@ -838,6 +855,7 @@ def EVENT():
     self.y = y
     self.char = char
     self.color = color
+    self.blocks = True
     def use (self):
         #Triggers global function corresponding to certain events, defined below
         do_nothing()
@@ -942,25 +960,26 @@ def handle_keys ():
     #alt enter for fullscreen
         libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen ())
     elif key.vk == libtcod.KEY_ESCAPE:
-        return True 
+        return 'Exit' 
     #esc exits
 
 #movement keys
-    if libtcod.console_is_key_pressed (libtcod.KEY_CHAR(w)):
+    if libtcod.console_is_key_pressed (libtcod.KEY_CHAR(w)) and game_state == 'playing':
+        #movement keys:
         player.move(0,-1)
         fov_recompute = True
-    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(s)):
+    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(s)) and game_state == 'playing':
         player.move(0,1)
         fov_recompute = True
-    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(a)):
+    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(a)) and game_state == 'playing':
         player.move(-1,0)
         fov_recompute = True
-    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(d)):
+    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(d)) and game_state == 'playing':
         player.move(1,0)
         fov_recompute = True
 
 #melee attack(player)
-    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(m)):
+    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(m)) and game_state == 'playing':
         if player.hnd1.dist == 1 and player.fire == False:
             melee_atk (player, player.hnd1, player.face)
         elif player.hnd2.dist == 1 and player.fire == False:
@@ -969,14 +988,15 @@ def handle_keys ():
             fist_attack (player, player.face, weap_fist)
             
 #Ranged attack(player)
-    if libtcod.console_is_key_pressed(libtcod.KEY_CHAR(r)):
+    elif libtcod.console_is_key_pressed(libtcod.KEY_CHAR(r)) and game_state == 'playing':
         if player.hnd1.dist > 1 and player.fire == False:
             melee_atk (player, player.hnd1, player.face)
         elif player.hnd2.dist > 1 and player.fire == False:
             melee_atk (player, player.hnd2, player.face)
         elif player.hnd1.dist == 1 and player.hnd2.dist == 1:
             print 'No ranged weapon equipped!'
- 
+    else:
+        return 'no-turn' 
 #rendering
 def render_all():
     for object in mapitems:
@@ -985,7 +1005,8 @@ def render_all():
         object.draw()
     for objects in animations:
         object.draw()
-        
+    for objects in events:
+        object.draw()
     for y in range (map_HEIGHT):
         for x in range(map_WIDTH):
             wall = map [x][y].blocksight
@@ -995,14 +1016,16 @@ def render_all():
                 libtcod.console_set_char_background(con, x, y, color_dark_floor, libtcod.BKGND_SET )
 libtcod.console_blit(con, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0)
 
-# Incoming main loop 
-pbag = ACTOR('Punching Bag', 'Sand', 'Burlap', 'bag', 5, 5, 'down', libtcod.yellow, '@', 'none', 100, 0, 50, 50, 50, 150, 'Burlap', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
+game_state = 'playing'
+player_action = None
 actors = list(player, pbag)
 mapitems = list ()
 animations = list ()
 events = list ()
 fov_recompute = True
+
+#MAIN LOOP
 while not libtcod.is_window_closed():
     framecount += 1
     render_all()
@@ -1015,7 +1038,9 @@ while not libtcod.is_window_closed():
         object.clear()
     for object in animations:
         object.clear()
-    exit = handle_keys()
-    if exit:
+    for object in events:
+        object.clear()
+    player_action = handle_keys()
+    if player_action == 'Exit':
         break
 #end main loop
