@@ -11,7 +11,7 @@
             if self.allegiance == 'Survivors'   
                 barklist = open('.//barks/survivors.txt')
                 lines=barklist.readlines()
-                ranbark = math.random(1, barklist.length())
+                ranbark = math.random(1, barklist.len())
                 print str(self.name) + ': ' + str(lines[ranbark])
 
 #Aimed atk, combat functions, line 104
@@ -112,15 +112,15 @@ def aimed_atk(target, original, weapon):
             targetmenu = True
 #Choose Your Target
             for targetmenu = True:
-                if targets.length() > 0:
+                if targets.len() > 0:
                      for x, object in targets:
                          print str(x) + ". " + object.name
                          x + 1
                      choose_target = raw_input('Choose a Target(#) or (N)one')
                      if choose_target == int:
-                         if choose_target > targets.length or choose_target < 1:
+                         if choose_target > targets.len() or choose_target < 1:
                              print 'Invalid target!'
-                         else for x in range(1, targets.length()):
+                         else for x in range(1, targets.len()):
                              if choose_target = x:
                                  player.currTarget = targets[x]
                                  targetmenu = False
@@ -1283,6 +1283,17 @@ def place_objects(room):
 
 #Skills and Skill Menu, find line
 
+def build_ability_list()
+self.abilities = list()
+    for key, x <= SKILLS.len() in self:
+        if key == str(SKILLS[x])
+            if self.key >= 1:
+                self.abilities.append(SKILLS[x].ability1)
+            if self.key >= 3:
+                self.abilities.append(SKILLS[x].ability2)
+            if self.key >= 5:
+                self.abilities.append(SKILLS[x].ability3)
+        x + 1
 def SKILL():
     __init__(self, name, description, xp_cost, ability1, ability2, ability3, keystat)
     self.name = name
@@ -1307,12 +1318,26 @@ rifles = SKILL('Rifles', 'DMG + 5% per skill level.', 20, takeaim, doubletap, he
 
 heavyw = SKILL('Heavy Weapons', 'DMG + 5% per skill level.', 20, ammosave, discharge, overclock, 'AGI')
 
-thrown = SKILL('Thrown Weapons', 'DMG + 5% per skill level.', 15, longarm, twohand, masterblaster , 'STR')
+thrown = SKILL('Thrown Weapons', 'DMG + 5% per skill level.', 15, longarm, twohand, masterblaster, 'STR')
 
 #Accessory Skills
-mobility = SKILL()
+mobility = SKILL('Mobility', '5% chance per skill level to dodge ranged attacks.', 15, backpedal, dodgeroll, hitandrun, 'AGI')
 
+software = SKILL('Software', 'Shield power + 10 per skill level.', 15, disengage, disable, control, 'INT')
 
+hardware = SKILL('Hardware', 'Damage + 10% per skill level against artificial targets.', repair, turret, autoguard, 'INT')
+
+leadership = SKILL('Leadership','Allies within range gain +10 AGI/STR per skill level.', concentratefire, retreat, entourage, 'INT')
+
+medicine = SKILL('Medicine', 'Effectiveness of healing items + 5% per skill level.', firstaid, synthmed, synthbuffs, 'INT')
+
+pilot = SKILL('Pilot', 'Stat bonuses +5% per skill level with any Mech equipped.', boost, abil2, trumpcard, 'INT')
+
+xenology = SKILL('Xenology', 'Expanded information on alien foes.', language, biology, technology, 'INT' )
+
+stealth = SKILL('Stealth', 'Increases enemy reaction times.', sneak, sneakattack, assassinate, 'AGI')
+
+SKILLS = list(blades, hammers, whips, thrown, heavyw, rifles, pistols, mobility, unarmed, stealth, xenology, hardware, software, pilot, medicine, leadership)
 
 #Abilities
 def ABILITY():
@@ -1325,26 +1350,56 @@ def ABILITY():
     self.desc = desc
 #Weapon abilities
 ammosave = ABILITY('Ammo Save', heavyw, 'None', 0, do_nothing(), 'Adds 2 charges per battery per skill level.')
+
 combo = ABILITY('Combo', unarmed, 'None', 0, do_nothing(), 'Adds additional hit upon successful unarmed attack.')
+
 deathblow = ABILITY('Deathblow', hammers, 'None', 25, do_nothing(), 'Activate to make a hammer swing that instantly kills most enemies.' )
+
 disarm = ABILITY('Disarm', whips, 'None', 15, do_nothing(), 'Activate to remove equipped weapon of any actor hit.')
+
 discharge = ABILITY('Discharge', heavyw, 'None', 25, do_nothing(), 'Activate to hit all adjacent enemies with heat discharge.')
+
 doubletap = ABILITY('Double Tap', rifles, 'None', 0, do_nothing(), 'Successful hit with any rifle weapon triggers a second shot.')
+
 dualfire = ABILITY('Dual-Fire', pistols, 'None', 0, do_nothing(), 'Adds additional shot with two pistols equipped.')
+
 dualwield = ABILITY('Dual-Wield', blades, 'None', 0, do_nothing(), 'Can attack with two blades per swing.')
+
 entangle = ABILITY('Entangle', whips, 'None', 25, do_nothing(), 'Activate to stop an enemy from moving, dealing damage over time while the whip remains attached.')
+
 headshot = ABILITY('Headshot', rifles, 'None', 0, do_nothing(), '25% chance to instantly kill most enemies.')
+
 hook = ABILITY('Hook', unarmed, 'None', 0, do_nothing(), 'Extends reach of unarmed attacks.')
+
 longarm = ABILITY('Long Arm', thrown, 'None', 0, do_nothing(), 'Increases range of thrown weapons by skill level.')
+
 maelstrom = ABILITY('Maelstrom', pistols, 'None', 25, do_nothing(), 'Activate to fire at all targets in range until out of ammo.')
+
 masterblaster = ABILITY('Master Blaster', thrown, 'None', 0, do_nothing(), 'Increases blast radius of grenade-like weapons.')
+
 mechanicalstrike = ABILITY('Mechanical Strike', hammers, 'None', 0, do_nothing(), 'Successful attacks with hammers inflict an additional hit.')
+
 northstarpalm = ABILITY('North Star Palm', unarmed, 'None', 0, do_nothing(), 'Adds a third hit to successful unarmed comboes. This hit can instantly kill most enemies.')
-overclock = ABILITY('Overclock', heavyw, 'None', 30, do_nothing(), 'Activate to fire a shot, with the damage multiplied by the number of charges remaining on the current battery.)
+
+overclock = ABILITY('Overclock', heavyw, 'None', 30, do_nothing(), 'Activate to fire a shot, with the damage multiplied by the number of charges remaining on the current battery.')
+                    
 parry = ABILITY('Parry', blades, 'None', 0, do_nothing(), '5% * skill level chance to evade melee attacks.')
+
 rush = ABILITY('Rush', hammers, 'None', 25, do_nothing(), 'Activate to damage and push all enemies forward up to 3 spaces.')
+
 speedreload = ABILITY('Speed Reload', pistols, 'None', 0, do_nothing(), 'Automatically reloads when ammo reaches 0.')
+
 swing = ABILITY('Swing', whips, 'None', 10, do_nothing(), 'Swings whip in chosen direction, if collides with wall or object, move actor to that point. Range = skill level.')
+
 takeaim = ABILITY('Take Aim', rifles, 'None', 10, do_nothing(), 'Activate to stop movement and take aim. Damage increases depending on time spent standing still.')
+
 twohand = ABILITY('Two Hand Throw', thrown, 'None', 0, do_nothing(), 'Throws an additional weapon if availible.')
+
 whirl = ABILITY('Whirl', blades, 'None', 25, do_nothing(), 'Activate to hit all adjacent enemies and move forward up to 3 spaces.')
+                    
+                    
+#Enemy AI Functions
+#Just remember to duplicate this:
+            if object.wait > 0:  #don't take a turn yet if still waiting
+            object.wait -= 1
+            return

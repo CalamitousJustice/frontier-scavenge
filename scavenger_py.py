@@ -3,7 +3,10 @@ import math
 from sys import path as syspath
 syspath.append('.//libtcod-1.6.0')
 import libtcodpy as libtcod
-
+#number of frames to wait after moving/attacking
+PLAYER_SPEED = 2
+DEFAULT_SPEED = 8
+DEFAULT_ATTACK_SPEED = 20
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50
 LIMIT_FPS = 20
@@ -16,7 +19,7 @@ libtcod.sys_set_fps(LIMIT_FPS)
 
 class ACTOR:
 
-    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, unarmed, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, suit, hnd1, hnd2, visor, shield):
+    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, speed = DEFAULT_SPEED, attack_speed = DEFAULT_ATTACK_SPEED, unarmed, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, stealth, suit, hnd1, hnd2, visor, shield):
         self.name = name
         self.gender = gender
         self.species = species
@@ -40,12 +43,15 @@ class ACTOR:
         self.status = status
         self.fire = fire
         self.drops = list(drops)
+        self.speed = speed
+        self.attack_speed = attack_speed
         self.movelock = False
         self.sneak = False
         self.swing = 1
         self.currTarget = 'None'
         self.aimWeap = 'None'
         self.blocks = 'True'
+        self.wait = 0
         
         #skills
         self.unarmed = unarmed
@@ -63,6 +69,8 @@ class ACTOR:
         self.medicine = medicine
         self.pilot = pilot
         self.xenology = xenology
+        self.stealth = stealth
+        self.abilities = list()
     
         #equipment
         self.hnd1 = hnd1
@@ -76,6 +84,7 @@ class ACTOR:
             if not is_blocked(self.x + dx, self.y + dy) and self.movelock == False:
                 self.x += dx
                 self.y += dy
+                self.wait = self.speed
                 if dx < 0:
                     self.face = 'left'
                     if self == 'player':
@@ -125,6 +134,7 @@ def melee_atk(original, hand, facing):
     if original.fire == False:
         hand.effect(original, original.facing, hand)
         original.fire = True
+        original.wait = original.attack_speed
 
 def fist_attack(original, facing, weapon):
     if facing == 'up':
@@ -923,7 +933,7 @@ visor_basic = VISOR(do_nothing())
 shield_basic = SHIELD(50, 15)
 
 #construct player
-player = ACTOR('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, 'V', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
+player = ACTOR('name', 'gender', 'species', 'job', 0, 0, 'down', libtcod.white, 'V', 'Input', 100, 0, 50, 50, 50, 150, 'Survivors', 'Alive', False, 'drop', PLAYER_SPEED, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, suit_skillsuit, weap_fist, weap_fist, visor_basic, shield_basic)
 
 print 'Welcome to Frontier: Scavenger!'
 player.name = raw_input('What is your name?')
@@ -962,9 +972,11 @@ def handle_keys ():
     elif key.vk == libtcod.KEY_ESCAPE:
         return 'Exit' 
     #esc exits
-
+    if player.wait > 0:  #don't take a turn yet if still waiting
+        player.wait -= 1
+        return
 #movement keys
-    if libtcod.console_is_key_pressed (libtcod.KEY_CHAR(w)) and game_state == 'playing':
+    elif libtcod.console_is_key_pressed (libtcod.KEY_CHAR(w)) and game_state == 'playing':
         #movement keys:
         player.move(0,-1)
         fov_recompute = True
