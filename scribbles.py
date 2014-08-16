@@ -7,13 +7,85 @@
             
 #actor.bark(), line 103
         def bark(self):
-            #for each self.race, check list of pre-written barks, print out one at random
+            #for each self.allegiance, check list of pre-written barks, print out one at random
             if self.allegiance == 'Survivors'   
                 barklist = open('.//barks/survivors.txt')
-                lines=barklist.readlines()
+                lines = barklist.readlines()
                 ranbark = math.random(1, barklist.len())
                 print str(self.name) + ': ' + str(lines[ranbark])
 
+#actor.find_closest(), line ~94
+        def find_closest(self):
+            #determine the closest enemy, set to self.currTarget
+            targets = list()
+            if facing == 'up':
+                for object in actors:
+                    if object.y < self.y and object.allegiance != self.allegiance:
+                        targets.append(object)
+            if facing == 'down':
+                for object in actors:
+                    if object.y > self.y and object.allegiance != self.allegiance:
+                        targets.append(object)
+            if facing == 'left':
+                    for object in actors:
+                        if object.x < self.x and object.allegiance != self.allegiance:
+                            targets.append(object)
+            if facing == 'right':
+                for object in actors:
+                    if object.x > self.x and object.allegiance != self.allegiance:
+                        targets.append(object)
+            target_diff = [self.hnd1.dist, self.hnd1.dist]
+            for object in targets:
+                object.dist_from_original = [abs(object.x - self.x), abs(object.y - self.y)]
+                if object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
+                    self.currTarget = object 
+
+
+#actor.move_toward(target), line 112
+        def move_toward(self, target):
+            mx = 0
+            my = 0
+            #Calc path to target, take step to decrease distance between
+            if target.x > self.x:
+                mx += 1
+            if target.y > self.y:
+                my += 1
+            if target.x < self.x:
+                mx -= 1
+            if target.y < self.y:
+                my -= 1
+            if mx > 0:
+                self.face = 'right'
+            if mx < 0:
+                self.face = 'left'
+            if my > 0:
+                self.face = 'down'
+            if my < 0:
+                self.face = 'up'
+            self.move(mx, my)
+
+#actor.move_away(target), line 125
+        def move_away(self, target):
+            mx = 0
+            my = 0
+            #Calc path to target, take step to decrease distance between
+            if target.x > self.x:
+                mx -= 1
+            if target.y > self.y:
+                my -= 1
+            if target.x < self.x:
+                mx += 1
+            if target.y < self.y:
+                my += 1
+            if mx > 0:
+                self.face = 'right'
+            if mx < 0:
+                self.face = 'left'
+            if my > 0:
+                self.face = 'down'
+            if my < 0:
+                self.face = 'up'
+            self.move(mx, my)
 #Aimed atk, combat functions, line 104
 def aimed_atk(target, original, weapon):
     player.fire = True
