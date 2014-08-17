@@ -1,6 +1,9 @@
 #actor.drop(), line 94
         def drop(self):
             self.clear()
+            for object in actors:
+                if object.currTarget == self:
+                    object.currTarget = null
             if not null in self.drop:
                 selfdrop = MAPITEM(self.drop, self.x, self.y, '?', libtcod.purple)
             actors.remove(self)
@@ -39,6 +42,13 @@
                 object.dist_from_original = [abs(object.x - self.x), abs(object.y - self.y)]
                 if object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
                     self.currTarget = object 
+
+
+#actor.fire_at_target, line ~112
+        def fire_at_target(self):
+            if self.currTarget != null:
+                aimed_atk(self.currTarget, self, self.hnd1)
+            else self.find_closest()
 
 #actor.move_toward(target), line 112
         def move_toward(self, target):
@@ -100,7 +110,7 @@
 
 #Aimed atk, combat functions, line 104
 def aimed_atk(target, original, weapon):
-    player.fire = True
+    original.fire = True
     if weapon.effect.str() == 'pulse_attack()':
         for sx, sy, sd in range(1, weapon.dist + 1):
             if map[(original.x + sx)][original.y + sy].blockpass:
@@ -115,7 +125,7 @@ def aimed_atk(target, original, weapon):
                 sx += 1
             if target.y > original.y:
                 sy += 1                         
-            libtcod.console_put_char(con, player.x + sx, player.y + sy, '*', libtcod.pink, libtcod.BKGND_NONE)
+            libtcod.console_put_char(con, original.x + sx, original.y + sy, '*', libtcod.pink, libtcod.BKGND_NONE)
             if collision(original.x + sx, original.y + sy):
                 damage(target, original, weapon)
                 libtcod.console_put_char(con, original.x + sx, original.y + sy, ' ', libtcod.BKGND_NONE)  
