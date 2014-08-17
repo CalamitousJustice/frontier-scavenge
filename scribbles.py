@@ -40,7 +40,6 @@
                 if object.dist_from_original[1] <= target_diff[1] and object.dist_from_original[2] <= target_diff[2]:
                     self.currTarget = object 
 
-
 #actor.move_toward(target), line 112
         def move_toward(self, target):
             mx = 0
@@ -62,6 +61,12 @@
                 self.face = 'down'
             if my < 0:
                 self.face = 'up'
+            #check_for_walls, dudes, correct
+            if is_blocked(self.x + mx, self.y + my):
+                if not is_blocked(self.x, self.y + my):
+                    mx = 0
+                elif not is_blocked(self.x + mx, self.y):
+                    my = 0
             self.move(mx, my)
 
 #actor.move_away(target), line 125
@@ -85,7 +90,14 @@
                 self.face = 'down'
             if my < 0:
                 self.face = 'up'
+            #check_for_walls, dudes, correct
+            if is_blocked(self.x + mx, self.y + my):
+                if not is_blocked(self.x, self.y + my):
+                    mx = 0
+                elif not is_blocked(self.x + mx, self.y):
+                    my = 0
             self.move(mx, my)
+
 #Aimed atk, combat functions, line 104
 def aimed_atk(target, original, weapon):
     player.fire = True
