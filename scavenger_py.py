@@ -19,7 +19,7 @@ libtcod.sys_set_fps(LIMIT_FPS)
 
 class ACTOR:
 
-    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, speed = DEFAULT_SPEED, attack_speed = DEFAULT_ATTACK_SPEED, unarmed, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, stealth, suit, hnd1, hnd2, visor, shield):
+    def __init__(self, name, gender, species, job, x, y, face, color, char, AI, EXPcurr, EXPspent, AGI, STR, INT, STMmax, allegiance, status, fire, drops, unarmed, mobility, blades, whips, hammers, pistols, rifles, heavyw, thrown, software, hardware, leadership, medicine, pilot, xenology, stealth, suit, hnd1, hnd2, visor, shield, speed = DEFAULT_SPEED, attack_speed = DEFAULT_ATTACK_SPEED):
         self.name = name
         self.gender = gender
         self.species = species
@@ -123,7 +123,7 @@ def damage(target, original, hand):
         elif damage_dealt >= 1 :
             target.HPcurr = target.HPcurr - damage_dealt
             if target.HPcurr <= 0 :
-  		          target.drop()
+                  target.drop()
 
 
 def collision(target, cx, cy):
@@ -147,24 +147,24 @@ def fist_attack(original, facing, weapon):
     if facing == 'down':
         libtcod.console_put_char(con, original.x, original.y + 1, '.', libtcod.BKGND_NONE)
         for object in actors:
-  	        if collision(object, original.x, original.y + 1):
-  		          damage(object, original, weapon)
+            if collision(object, original.x, original.y + 1):
+                damage(object, original, weapon)
                 object.move(0,1)
                 libtcod.console_put_char(con, original.x, original.y + 1, ' ', libtcod.BKGND_NONE)
-        if facing == 'left':
-            libtcod.console_put_char(con, original.x - 1, original.y, '.', libtcod.BKGND_NONE)
-            for object in actors:
-  	            if collision(object, original.x - 1, original.y):
-  		              damage(object, original, weapon)
-                    object.move(-1,0)
-                    libtod.console_put_char(con, original.x - 1, original.y, ' ', libtcod.BKGND_NONE)
-        if facing == 'right':
-            libtcod.console_put_char(con, original.x + 1, original.y, '.', libtcod.BKGND_NONE)
-            for object in actors:
-                if collision(object, original.x + 1, original.y):
-                    damage(object, original, weapon)
-                    object.move(1,0)
-                    libtcod.console_put_char(con, original.x + 1, original.y, ' ', libtcod.BKGND_NONE)
+    if facing == 'left':
+        libtcod.console_put_char(con, original.x - 1, original.y, '.', libtcod.BKGND_NONE)
+        for object in actors:
+             if collision(object, original.x - 1, original.y):
+                damage(object, original, weapon)
+                object.move(-1,0)
+                libtod.console_put_char(con, original.x - 1, original.y, ' ', libtcod.BKGND_NONE)
+    if facing == 'right':
+        libtcod.console_put_char(con, original.x + 1, original.y, '.', libtcod.BKGND_NONE)
+        for object in actors:
+            if collision(object, original.x + 1, original.y):
+                damage(object, original, weapon)
+                object.move(1,0)
+                libtcod.console_put_char(con, original.x + 1, original.y, ' ', libtcod.BKGND_NONE)
     original.fire = False
 
 def dagger_attack(original, facing, weapon):
@@ -178,15 +178,15 @@ def dagger_attack(original, facing, weapon):
     if facing == 'down':
         libtcod.console_put_char(con, original.x, original.y + 1, '|', libtcod.BKGND_NONE)
         for object in actors:
-  	        if collision(object, original.x, original.y + 1):
-  		          damage(object, original, weapon)
+            if collision(object, original.x, original.y + 1):
+                  damage(object, original, weapon)
                 object.move(0,1)
                 libtcod.console_put_char(con, original.x, original.y + 1, ' ', libtcod.BKGND_NONE)
         if facing == 'left':
             libtcod.console_put_char(con, original.x - 1, original.y, '_', libtcod.BKGND_NONE)
             for object in actors:
-  	            if collision(object, original.x - 1, original.y):
-  		              damage(object, original, weapon)
+                if collision(object, original.x - 1, original.y):
+                      damage(object, original, weapon)
                     object.move(-1,0)
                     libtcod.console_put_char(con, original.x - 1, original.y, ' ', libtcod.BKGND_NONE)
         if facing == 'right':
@@ -280,7 +280,7 @@ def sword_attack(original, facing, weapon):
                 if collision(object, original.x + 1, original.y + 1):
                     damage(object, original, weapon)
                     object.move(0,1)
-                    libtcod.console_put_char(con, original.x + 1, original.y + 1, ' ', libtcod.BKGND_NONE)	         
+                    libtcod.console_put_char(con, original.x + 1, original.y + 1, ' ', libtcod.BKGND_NONE)           
         elif original.swing == 2:
             original.swing -= 1
             libtcod.console_put_char(con, original.x + 1, original.y, '_', libtcod.BKGND_NONE)
@@ -793,7 +793,7 @@ def pulse_attack(original, facing, weapon):
 #Beam Attack (line, background & foreground)
 
 def do_nothing():
-	print 'Unfortunately, this does nothing.'
+    print 'Unfortunately, this does nothing.'
 
 #move collision
 def is_blocked(x, y):
@@ -895,7 +895,7 @@ def ANIMATION():
         libtcod.console_set_default_foreground(con, self.color)
         if self.color == libtcod.yellow:
             libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.orange)
-        else libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
+        else: libtcod.console_put_char(con, self.x, self.y, self.char, libtcod.BKGND_NONE)
         animations.append(self)
     def clear (self):
         #Clears character
